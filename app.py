@@ -68,7 +68,7 @@ def attractions_api():
 			name_keyword = "%{}%".format(keyword)
 			query_num = Attraction.query.filter(Attraction.name.like(name_keyword)).count()
 			if begin < query_num:
-				end, nextpage = pagecheck(query_num, page, begin)
+				end, nextpage = pagecheck(query_num, page)
 				query = Attraction.query.filter(Attraction.name.like(name_keyword)).limit(end).offset(begin).all()
 				res, state = onepage_json(query, nextpage, end)
 			else:
@@ -78,7 +78,7 @@ def attractions_api():
 		else:
 			query_num = Attraction.query.count()
 			if begin < query_num:
-				end, nextpage = pagecheck(query_num, page, begin)
+				end, nextpage = pagecheck(query_num, page)
 				query = Attraction.query.limit(end).offset(begin).all()
 				res, state = onepage_json(query, nextpage, end)
 			else:
@@ -117,7 +117,7 @@ def attraction_query(id):
 		return jsonify(res), state
 
 
-def pagecheck(query_num, page, begin):
+def pagecheck(query_num, page):
 	'''
 	確認頁數範圍及是否有下一頁
 	'''
