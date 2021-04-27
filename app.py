@@ -63,15 +63,29 @@ def attractions_api():
 	try:
 		page = int(request.args.get("page"))
 		keyword = request.args.get("keyword")
+		begin = page * onepage_num
 		if keyword != None:
 			name_keyword = "%{}%".format(keyword)
-			query = Attraction.query.filter(Attraction.name.like(name_keyword)).all()
-			res, state = onepage_json(query, page)
-			return jsonify(res), state
+			query_num = Attraction.query.filter(Attraction.name.like(name_keyword)).count()
+			if begin < query_num:
+				end, nextpage = pagecheck(query_num, page, begin)
+				query = Attraction.query.filter(Attraction.name.like(name_keyword)).limit(end).offset(begin).all()
+				res, state = onepage_json(query, nextpage, end)
+			else:
+				# 代表超過頁數
+				res = error_json(error_message["3"])
+				state = 500
 		else:
-			query = Attraction.query.order_by(Attraction.id).all()
-			res, state = onepage_json(query, page)
-			return jsonify(res), state
+			query_num = Attraction.query.count()
+			if begin < query_num:
+				end, nextpage = pagecheck(query_num, page, begin)
+				query = Attraction.query.limit(end).offset(begin).all()
+				res, state = onepage_json(query, nextpage, end)
+			else:
+				# 代表超過頁數
+				res = error_json(error_message["3"])
+				state = 500
+		return jsonify(res), state
 	except:
 		res = error_json(error_message["2"])
 		state = 500
@@ -94,35 +108,43 @@ def attraction_query(id):
 		else:
 			res = error_json(error_message["1"])
 			state = 400
+
 		return jsonify(res), state
 	except:
 		res = error_json(error_message["2"])
 		state = 500
+
 		return jsonify(res), state
 
 
-def onepage_json(query, page):
+def pagecheck(query_num, page, begin):
+	'''
+	確認頁數範圍及是否有下一頁
+	'''
+	check = (page + 1) * onepage_num
+	if check > query_num:
+		end = query_num % onepage_num
+		nextpage = None
+	else:
+		end = onepage_num
+		nextpage = page + 1
+
+	return end, nextpage
+
+
+def onepage_json(query, nextpage, end):
 	'''
 	此頁的景點資料 JSON
 	'''
-	maxnum = len(query)
-	begin = page * onepage_num
-	end = begin + onepage_num
-	if begin < maxnum:
-		if end > maxnum:
-			end = maxnum
-		data = []
-		for i in range(begin, end):
-			att_data = attraction_json(query[i])
-			data.append(att_data)
-		res = {
-			"nextPage": page + 1,
-			"data": data
-		}
-		state = 200
-	else:
-		res = error_json(error_message["3"])
-		state = 500
+	data = []
+	for i in range(end):
+		att_data = attraction_json(query[i])
+		data.append(att_data)
+	res = {
+		"nextPage": nextpage,
+		"data": data
+	}
+	state = 200
 	
 	return res, state
 
@@ -158,4 +180,5 @@ def error_json(error_message):
 	return res
 
 
-app.run(host="0.0.0.0",port=3000)
+if __name__ == "__main__":
+	app.run(host="0.0.0.0",port=3000)
