@@ -7,7 +7,9 @@ import json
 import collections
 
 
-app=Flask(__name__)
+app = Flask(__name__,
+            static_folder="static",
+            static_url_path="/")
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
 app.config['JSON_SORT_KEYS'] = False
