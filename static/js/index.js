@@ -4,6 +4,7 @@ const attractions_url = "/api/attractions";
 let now_page = 0;
 let next_page = 1;
 let load_state = false;
+let searchkeyword = document.getElementById("searchkeyword");
 
 
 function attractions_fetch(url, now_page, keyword=null){
@@ -75,9 +76,8 @@ attractions_fetch(attractions_url,now_page);
 
 // let i = 1;
 if (next_page !== null){
-    console.log("ne===",next_page)
+    // console.log("next===",next_page);
     window.addEventListener('scroll',()=>{
-        // console.log("ss",scrollTop);
         if(((window.innerHeight + window.scrollY) > (document.body.getBoundingClientRect().bottom)) && load_state) {
             now_page = next_page;
             attractions_fetch(attractions_url,next_page);
@@ -86,5 +86,12 @@ if (next_page !== null){
             // i++;
         }
       });
+}
 
+function search () {
+    let attractionrow = document.querySelector(".attraction-row");
+    attractionrow.innerHTML = '';
+    now_page = 0;
+    console.log("sear=",searchkeyword.value);
+    attractions_fetch(attractions_url,now_page,searchkeyword.value);
 }

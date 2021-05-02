@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/css/index.css">
-    <script src="/js/index.js"></script>
+    <!-- <script src="/js/index.js"></script> -->
 </head>
 <body>
     <header>
@@ -25,9 +25,9 @@
         <div class="memo">
             <div class="memo1">輕鬆享受台北一日悠閒</div>
             <div class="memo2"><p>探索每個角落，體驗城市的深度旅遊行程</p></div>
-            <form action="" class="search" id="search">
+            <form action="" class="search" id="search" method="GET">
                 <input type="text" class="search-input" placeholder="輸入景點名稱查詢" id="searchkeyword">
-                <button class="search-btn" id="searchbtn" type="button"><img src="/img/search.png" alt="搜尋"></button>
+                <button class="search-btn" id="searchbtn" type="button" onclick="search();"><img src="/img/search.png" alt="搜尋"></button>
             </form>
         </div>
     </nav>
@@ -49,6 +49,6 @@
     <footer>
         <div>COPYRIGHT © 2021 台北一日遊</div>
     </footer>
-    
+    <script src="/js/index.js"></script>
 </body>
 </html>
