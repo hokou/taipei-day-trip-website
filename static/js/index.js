@@ -2,7 +2,7 @@
 const attractions_url = "/api/attractions";
 
 let now_page = 0;
-let next_page = 1;
+let next_page = now_page +1;
 let load_state = false;
 let searchkeyword = document.getElementById("searchkeyword");
 
@@ -11,20 +11,29 @@ function attractions_fetch(url, now_page, keyword=null){
     if (now_page !== null) {
         if (keyword === null) {
             url = url + "?page=" + now_page;
-            console.log("no=",url);
+            // console.log("n=",url);
         }else {
             url = url + "?page=" + now_page + "&keyword=" + keyword;
-            console.log("y=",url);
+            // console.log("y=",url);
         }
-        console.log("now=",now_page);
+        // console.log("now=",now_page);
         fetch(url).then(function(response){
             return response.json();
         }).then(function(result){
-            next_page = result.nextPage;
-            console.log("next",next_page);
-            let data = result.data;
-            // console.log(data);
-            attractions_create(data);
+            // console.log(result);
+            if (result.error !== true){
+                next_page = result.nextPage;
+                // console.log("next",next_page);
+                let data = result.data;
+                // console.log(data);
+                attractions_create(data);
+            }else {
+                let message = result.message;
+                show_message(message);
+                alert(message);
+            }
+        }).catch(function(err){
+            console.log("err:",err);
         });
     }
 };
@@ -76,11 +85,11 @@ attractions_fetch(attractions_url,now_page);
 
 // let i = 1;
 if (next_page !== null){
-    // console.log("next===",next_page);
+    // console.log("next=",next_page);
     window.addEventListener('scroll',()=>{
         if(((window.innerHeight + window.scrollY) > (document.body.getBoundingClientRect().bottom)) && load_state) {
             now_page = next_page;
-            attractions_fetch(attractions_url,next_page);
+            attractions_fetch(attractions_url,next_page,searchkeyword.value);
             load_state = false;
             // console.log("---->",i);
             // i++;
@@ -88,10 +97,18 @@ if (next_page !== null){
       });
 }
 
-function search () {
+function search() {
     let attractionrow = document.querySelector(".attraction-row");
     attractionrow.innerHTML = '';
     now_page = 0;
-    console.log("sear=",searchkeyword.value);
+    console.log("search=",searchkeyword.value);
     attractions_fetch(attractions_url,now_page,searchkeyword.value);
+}
+
+function show_message(message) {
+    let attraction = document.querySelector(".attraction-row");
+    let mes = document.createElement("span");
+    mes.style.margin = "20px auto";
+    mes.textContent = message;
+    attraction.appendChild(mes);
 }

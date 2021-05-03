@@ -25,8 +25,8 @@
         <div class="memo">
             <div class="memo1">輕鬆享受台北一日悠閒</div>
             <div class="memo2"><p>探索每個角落，體驗城市的深度旅遊行程</p></div>
-            <form action="" class="search" id="search" method="GET">
-                <input type="text" class="search-input" placeholder="輸入景點名稱查詢" id="searchkeyword">
+            <form action="" class="search" id="search" method="GET" onsubmit="search();return false">
+                <input type="text" class="search-input" placeholder="輸入景點名稱查詢" id="searchkeyword" onclick="this.value=''";>
                 <button class="search-btn" id="searchbtn" type="button" onclick="search();"><img src="/img/search.png" alt="搜尋"></button>
             </form>
         </div>
@@ -44,7 +44,6 @@
                 </div>
             </div>
         </article> -->
-        <br>
     </section>
     <footer>
         <div>COPYRIGHT © 2021 台北一日遊</div>
