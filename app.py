@@ -7,7 +7,9 @@ import json
 import collections
 
 
-app=Flask(__name__)
+app = Flask(__name__,
+            static_folder="static",
+            static_url_path="/")
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
 app.config['JSON_SORT_KEYS'] = False
@@ -36,6 +38,7 @@ error_message = {
 	"1":"景點編號不正確",
 	"2":"伺服器內部錯誤，請稍後再試",
 	"3":"頁數錯誤",
+	"4":"查無資料"
 }
 
 
@@ -67,18 +70,19 @@ def attractions_api():
 		if keyword != None:
 			name_keyword = "%{}%".format(keyword)
 			query_num = Attraction.query.filter(Attraction.name.like(name_keyword)).count()
+			# print("check", name_keyword, query_num)
 			if begin < query_num:
-				end, nextpage = pagecheck(query_num, page, begin)
+				end, nextpage = pagecheck(query_num, page)
 				query = Attraction.query.filter(Attraction.name.like(name_keyword)).limit(end).offset(begin).all()
 				res, state = onepage_json(query, nextpage, end)
 			else:
-				# 代表超過頁數
-				res = error_json(error_message["3"])
+				# 代表查無資料
+				res = error_json(error_message["4"])
 				state = 500
 		else:
 			query_num = Attraction.query.count()
 			if begin < query_num:
-				end, nextpage = pagecheck(query_num, page, begin)
+				end, nextpage = pagecheck(query_num, page)
 				query = Attraction.query.limit(end).offset(begin).all()
 				res, state = onepage_json(query, nextpage, end)
 			else:
@@ -117,7 +121,7 @@ def attraction_query(id):
 		return jsonify(res), state
 
 
-def pagecheck(query_num, page, begin):
+def pagecheck(query_num, page):
 	'''
 	確認頁數範圍及是否有下一頁
 	'''

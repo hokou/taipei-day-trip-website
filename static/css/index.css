@@ -1,0 +1,229 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    font-size: 16px;
+    font-family: 'Noto Sans TC', sans-serif;
+    box-sizing: border-box;
+}
+
+header {
+    height: 54px;
+    width: 100%;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    position: fixed;
+}
+
+header >.head {
+    width: 1200px;
+    display: flex;
+    margin: 0px auto;
+    justify-content: space-between;
+}
+
+header >.head >.title {
+    font-size: 30px;
+    color: #448899;
+    text-align: center;
+}
+
+ul li{
+    list-style-type: none;
+    /* width: 80px; */
+    text-align: center;
+}
+
+header >.head >.menu {
+    display: flex;
+}
+
+header >.head >.menu >li {
+    margin: auto;
+    padding: 10px;
+    color: #666666;
+}
+
+nav {
+    width: 100%;
+    height: 374px;
+    padding-top: 54px;
+    background-image: url("/img/welcome.png"), linear-gradient(135deg, #AADDEE 0%, #66AABB 100%);;
+    background-repeat: no-repeat;
+    background-size: auto, contain;
+    background-position: bottom right 232px, top;
+    display: flex;
+    margin: auto;
+}
+
+nav >.memo {
+    width: 1200px;
+    display: flex;
+    margin: auto;
+    margin-bottom: 86px;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+}
+
+nav >.memo > .memo1 {
+    font-size: 28px;
+    /* line-height: 24px; */
+    /* height: 41px; */
+    align-items: center;
+    color: #F8F8F8;
+}
+
+nav >.memo > .memo2 {
+    align-items: center;
+    color: #F8F8F8;
+    margin: 15px 0 25px 0;
+}
+
+nav >.memo >.search {
+    height: 46px;
+    display: flex;
+    /* width: 460px; */
+    /* border-radius: 5px; */
+}
+
+nav >.memo >.search >.search-input {
+    padding:15px;
+    border: none;
+    color:#757575;
+    border-radius: 5px 0 0 5px;
+    width:400px;
+    outline:none;
+    line-height: 16px;
+    height:46px;
+}
+
+nav >.memo >.search >.search-btn {
+    background-color:#448899;
+    border: none;
+    display: flex;
+    justify-content:center;
+    align-items:center;
+    width:60px;
+    border-radius: 0 5px 5px 0;
+    outline:none;
+    cursor: pointer;
+}
+
+
+section {
+    margin: auto;
+    margin-top: 40px;
+    max-width: 1200px;
+    display: flex;
+    flex-wrap: wrap;
+    /* justify-content: space-between; */
+}
+
+section >.attraction-box {
+    width: 270px;
+    border-radius: 5px;
+    border: 1px solid #E8E8E8;
+    margin: 15px;
+    /* padding: 15px; */
+}
+
+section >.attraction-box >.attraction-img> img {
+    width: 100%;
+    height: auto;
+    max-height: 160px;
+    vertical-align: bottom;
+}
+
+section >.attraction-box >.attraction-text {
+    margin: 12px 10px;
+}
+
+section >.attraction-box >.attraction-text >.attraction-title {
+    margin-bottom: 15px;
+    font-weight: bold;
+    color: #757575;
+}
+
+section >.attraction-box >.attraction-text >.attraction-data {
+    display: flex;
+    justify-content: space-between;
+    color: #757575;
+}
+
+footer {
+    width: 100%;
+    display: flex;
+    background-color: #757575;
+    height: 104px;
+    color: #ffffff;
+}
+
+footer >div {
+    margin: auto;
+}
+
+@media (max-width:1200px) {
+
+    header >.head {
+        margin: 10px 0px 10px 10px;
+    }
+
+    nav {
+        background-size: 60%, auto;
+        background-position: bottom right -100px, top;
+    }
+
+    nav >.memo {
+        width: 90%;
+        margin: auto 10px;
+    }
+
+    section {
+        width: 90%;
+        justify-content: space-between;
+    }
+
+    section >.attraction-box {
+        /* max-width: 320px; */
+        width: 44%;
+    }
+
+    section >.attraction-box >.attraction-img> img {
+        max-height: 100%;
+    }
+}
+
+
+@media (max-width:600px) {
+
+    nav {
+        background-size: 80%, auto;
+        background-position: bottom right -100px, top;
+    }
+
+    nav >.memo {
+        max-width: 340px;
+        /* width: 90%; */
+    }
+
+    nav >.memo >.search >.search-input {
+        max-width: 230px;
+    }
+
+    section {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    section >.attraction-box {
+        /* max-width: 320px; */
+        width: 90%;
+    }
+
+    section >.attraction-box >.attraction-img> img {
+        width: 100%;
+        /* max-height: 200px; */
+    }
+
+}
