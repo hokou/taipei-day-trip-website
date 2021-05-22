@@ -124,20 +124,14 @@ section >.attraction-box {
     width: 270px;
     border-radius: 5px;
     border: 1px solid #E8E8E8;
-    margin: 15px auto;
+    margin: 15px;
     /* padding: 15px; */
-}
-
-section >.attraction-box >.attraction-img {
-    height: 160px;
 }
 
 section >.attraction-box >.attraction-img> img {
     width: 100%;
-    border-radius: 5px 5px 0px 0px;
-    height: 100%;
-    object-fit: cover;
-    /* max-height: 160px; */
+    height: auto;
+    max-height: 160px;
     vertical-align: bottom;
 }
 
@@ -192,17 +186,11 @@ footer >div {
 
     section >.attraction-box {
         /* max-width: 320px; */
-        width: 45%;
-    }
-
-    section >.attraction-box >.attraction-img {
-        height: 75%;
-        /* max-height: 300px; */
+        width: 44%;
     }
 
     section >.attraction-box >.attraction-img> img {
-        height: 100%;
-        /* max-height: 300px; */
+        max-height: 100%;
     }
 }
 
