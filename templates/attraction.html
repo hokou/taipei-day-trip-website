@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>台北一日遊-景點</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/attraction.css">
+</head>
+<body>
+    <header>
+        <div class="head">
+            <div class="title">台北一日遊</div>
+            <ul class="menu">
+                <li>預定行程</li>
+                <li>登入/註冊</li>
+            </ul>
+            </div>
+        </div>
+    </header>
+    <div class="buffer"></div>
+    <section class="attraction-data">
+        <div class="attraction-img">
+            <!-- <div class="loader" id="loader"></div> -->
+            <!-- <div class="indicator-group" id="indicatorGroup"></div> -->
+            <div class="carousel-slide" id="carousel-slide">
+                <!-- <img src="http://www.travel.taipei/d_upload_ttn/sceneadmin/pic/11000848.jpg" alt=""> -->
+                <div class="arrow">
+                    <img src="{{url_for('static', filename='img/left_arrow.png')}}" alt="" class="left" id="prevBtn">
+                    <img src="{{url_for('static', filename='img/right_arrow.png')}}" alt="" class="right" id="nextBtn">
+                </div>
+                <div class="po">
+                    <div class="p"></div>
+                    <div class="p"></div>
+                    <div class="p"></div>
+                </div>
+            </div>
+        </div>
+        <div class="attraction-profile">
+            <div class="name-text" id="name">平安鐘</div>
+            <div class="category-text"><span id="category">養生溫泉</span> at <span id="mrt">新北投</div>
+            <div class="booking">
+                <div class="booking-title">訂購導覽行程</div>
+                <div class="booking-text">以此景點為中心的一日行程，帶您探索城市角落故事</div>
+                <form action="/booking" class="booking-form">
+                    <div class="booking-title date-selection">
+                        <label for="bookingDate"  class="booking-title">選擇日期：</label>
+                        <input type="date" name="date" id="bookingDate" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
+                    </div>
+                    <div class="booking-title time-selection" id="time">
+                        <span  class="booking-title">選擇時間：</span>
+                        <input type="radio" id="AM" name="time" value="AM" checked>
+                        <label for="AM" class="booking-text label">上半天</label>
+                        <input type="radio" id="PM" name="time" value="PM">
+                        <label for="PM" class="booking-text label">下半天</label>
+                    </div>
+                    <div  class="booking-title">導覽費用：</span><span class="booking-text" id="price">新台幣 2000 元</div>
+                    <button class="booking-button" type="button">開始預訂行程</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    <hr>
+    <div class="attraction-memo">
+        <article class="content-reg description" id="description">
+            北投溫泉從日據時代便有盛名，深受喜愛泡湯的日人自然不會錯過，瀧乃湯、星乃湯、鐵乃湯就是日本人依照溫泉的特性與療效給予的名稱，據說對皮膚病、神經過敏、氣喘、風濕等具有很好的療效，也因此成為了北部最著名的泡湯景點之一。新北投溫泉的泉源為大磺嘴溫泉，泉質屬硫酸鹽泉，PH值約為3~4之間，水質呈黃白色半透明，泉水溫度約為50-90℃，帶有些許的硫磺味 。目前北投的溫泉旅館、飯店、會館大部分集中於中山路、光明路沿線以及北投公園地熱谷附近，總計約有44家，每一家都各有其特色，多樣的溫泉水療以及遊憩設施，提供遊客泡湯養生，而鄰近的景點也是非常值得造訪，例如被列為三級古蹟的三寶吟松閣、星乃湯、瀧乃湯以及北投第一家溫泉旅館「天狗庵」，都有著深遠的歷史背景，而北投公園、北投溫泉博物館、北投文物館、地熱谷等，更是遊客必遊的景點，來到北投除了可以讓溫泉洗滌身心疲憊，也可以順便了解到北投溫泉豐富的人文歷史。
+        </article>
+        <article class="address">
+            <p class="memo-text">景點地址：</p>
+            <p class="content" id="address">臺北市 北投區中山路、光明路沿線</p>
+        </article>
+        <article class="transportation">
+            <p class="memo-text">交通方式：</p>
+            <p class="content" id="transport">新北投站下車，沿中山路直走即可到達公車：216、218、223、230、266、602、小6、小7、小9、、小22、小25、小26至新北投站下車</p>
+        </article>
+    </div>
+    <footer>
+        <div>COPYRIGHT © 2021 台北一日遊</div>
+    </footer>
+    <script src="/js/attraction.js"></script>
+</body>
+</html>

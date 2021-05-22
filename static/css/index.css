@@ -4,6 +4,7 @@
     font-size: 16px;
     font-family: 'Noto Sans TC', sans-serif;
     box-sizing: border-box;
+    border: none;
 }
 
 header {
@@ -13,6 +14,10 @@ header {
     display: flex;
     align-items: center;
     position: fixed;
+    border-top:none;
+    border-left:none;
+    border-right:none;
+    border-bottom:1px solid #E8E8E8;
 }
 
 header >.head {
@@ -124,14 +129,20 @@ section >.attraction-box {
     width: 270px;
     border-radius: 5px;
     border: 1px solid #E8E8E8;
-    margin: 15px;
+    margin: 15px auto;
     /* padding: 15px; */
 }
 
-section >.attraction-box >.attraction-img> img {
+section >.attraction-box >.attraction-img {
+    height: 160px;
+}
+
+section >.attraction-box >.attraction-img> a> img {
     width: 100%;
-    height: auto;
-    max-height: 160px;
+    border-radius: 5px 5px 0px 0px;
+    height: 100%;
+    object-fit: cover;
+    /* max-height: 160px; */
     vertical-align: bottom;
 }
 
@@ -186,11 +197,17 @@ footer >div {
 
     section >.attraction-box {
         /* max-width: 320px; */
-        width: 44%;
+        width: 45%;
     }
 
-    section >.attraction-box >.attraction-img> img {
-        max-height: 100%;
+    section >.attraction-box >.attraction-img {
+        height: 75%;
+        /* max-height: 300px; */
+    }
+
+    section >.attraction-box >.attraction-img> a> img {
+        height: 100%;
+        /* max-height: 300px; */
     }
 }
 
@@ -221,7 +238,7 @@ footer >div {
         width: 90%;
     }
 
-    section >.attraction-box >.attraction-img> img {
+    section >.attraction-box >.attraction-img>a > img {
         width: 100%;
         /* max-height: 200px; */
     }
