@@ -86,13 +86,24 @@ header >.head >.menu >li {
     /* background-image: url("http://www.travel.taipei/d_upload_ttn/sceneadmin/pic/11000848.jpg"); */
     background-size: cover;
     background-position: center;
+    position: relative;
+}
+
+.attraction-data >.attraction-img >.carousel-slide >.images {
+    width: 100%;
+    height: 100%;
 }
 
 .attraction-data >.attraction-img >.carousel-slide >.images > img {
     width: 100%;
     height: 100%;
-    border-radius: 5px;
+    object-position: center center;
     object-fit: cover;
+    position: relative;
+    border-radius: 5px;
+    opacity: 1;
+    transition: opacity 5s ease;
+    overflow:hidden;
 }
 
 .attraction-data >.attraction-img >.carousel-slide >.images > .hide {
@@ -261,11 +272,14 @@ footer >div {
     }
 }
 
-
 @media (max-width:600px) {
 
+    .attraction-data >.attraction-img {
+        max-width: 400px;
+    }
+
     .attraction-data >.attraction-img >.carousel-slide {
-        max-height: 350px;
+        max-height: 300px;
     }
 
 }

@@ -43,9 +43,10 @@ function attraction_create(data){
         imgelement.classList.add('hide');
         poelement.classList.add('p');
     }
+    // 只會選第 1 個;
     let img_first = document.querySelector(".hide");
-    img_first.className = "action";
-    // img_first.classList.add("action");
+    img_first.classList.add("action");
+    // img_first.className = "action";
     let po_first = document.querySelector(".p");
     po_first.classList.add("p_action");
     // po_first.className += " p_action";
@@ -83,12 +84,48 @@ function timechange(){
 
 // == 影像輪播切換
 
-function next_img (){
+let slideindex = 0;
+let timeout = 4000;
+let prevBtn = document.querySelector("#prevBtn");
+let nextBtn = document.querySelector("#nextBtn");
+let img_all = document.getElementsByClassName("hide");
+let po_all = document.getElementsByClassName("p");
 
+prevBtn.addEventListener("click", previous_img)
+nextBtn.addEventListener("click", next_img)
+
+function next_img (){
+    let img_num = img_all.length;
+    let nextindex = slideindex + 1;
+    if (nextindex >= img_num) {
+        nextindex = 0;
+    }
+    img_all[nextindex].classList.add('action');
+    img_all[slideindex].classList.remove('action');
+    po_all[nextindex].classList.add('p_action');
+    po_all[slideindex].classList.remove('p_action');
+    if (slideindex >= img_num -1 ) {
+        slideindex = 0;
+    } else {
+        slideindex ++;
+    }
 }
 
 function previous_img (){
-
+    let img_num = img_all.length;
+    let previndex = slideindex - 1;
+    if (previndex <= -1) {
+        previndex = img_num-1;
+    }
+    img_all[previndex].classList.add('action');
+    img_all[slideindex].classList.remove('action');
+    po_all[previndex].classList.add('p_action');
+    po_all[slideindex].classList.remove('p_action');
+    if (slideindex <= 0 ) {
+        slideindex = img_num-1;
+    } else {
+        slideindex --;
+    }
 }
 
-
+setInterval('next_img()',timeout)
