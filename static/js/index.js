@@ -44,10 +44,12 @@ function attractions_create(result){
         let title = result[i].name;
         let mrt = result[i].mrt;
         let cat = result[i].category;
+        let img_a = `/attraction/${result[i].id}`;
         let img = result[i].images[0];
 
         let div_box = document.createElement("article");
         let div_img = document.createElement("div");
+        let att_a = document.createElement("a");
         let att_img = document.createElement("img");
         let div_text = document.createElement("div");
         let div_title = document.createElement("div");
@@ -57,6 +59,7 @@ function attractions_create(result){
 
         div_box.className = "attraction-box";
         div_img.className = "attraction-img";
+        att_a.href = img_a;
         att_img.src = img;
         div_text.className = "attraction-text";
         div_title.className = "attraction-title";
@@ -69,7 +72,8 @@ function attractions_create(result){
 
         attraction.appendChild(div_box);
         div_box.appendChild(div_img);
-        div_img.appendChild(att_img);
+        div_img.appendChild(att_a);
+        att_a.appendChild(att_img);
         div_box.appendChild(div_text);
         div_text.appendChild(div_title);
         div_text.appendChild(div_data);
