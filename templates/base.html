@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/base.css">
+    {% block css %}{% endblock %}
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <div class="head">
+            <div class="title">台北一日遊</div>
+            <ul class="menu">
+                <li>預定行程</li>
+                <li>登入/註冊</li>
+            </ul>
+            </div>
+        </div>
+    </header>
+    <div class="buffer"></div>
+    {% block main %}{% endblock %}
+    <footer>
+        <div>COPYRIGHT © 2021 台北一日遊</div>
+    </footer>
+    <script src="/js/base.js"></script>
+    {% block script %}{% endblock %}
+</body>
+</html>

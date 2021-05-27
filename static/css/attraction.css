@@ -1,60 +1,3 @@
-* {
-    margin: 0px;
-    padding: 0px;
-    font-size: 16px;
-    font-family: 'Noto Sans TC', sans-serif;
-    box-sizing: border-box;
-    border: none;
-}
-
-header {
-    height: 54px;
-    width: 100%;
-    background-color: #ffffff;
-    display: flex;
-    align-items: center;
-    position: fixed;
-    border-top:none;
-    border-left:none;
-    border-right:none;
-    border-bottom:1px solid #E8E8E8;
-    z-index: 100;
-}
-
-header >.head {
-    width: 1200px;
-    display: flex;
-    margin: 0px auto;
-    justify-content: space-between;
-    
-}
-
-header >.head >.title {
-    font-size: 30px;
-    color: #448899;
-    text-align: center;
-}
-
-ul li{
-    list-style-type: none;
-    /* width: 80px; */
-    text-align: center;
-}
-
-header >.head >.menu {
-    display: flex;
-}
-
-header >.head >.menu >li {
-    margin: auto;
-    padding: 10px;
-    color: #666666;
-}
-
-.buffer {
-    height: 54px;
-}
-
 /* ==== */
 
 .attraction-data {
@@ -64,8 +7,6 @@ header >.head >.menu >li {
     /* flex-wrap: wrap; */
     justify-content: space-around;
 }
-
-/* ==== */
 
 .attraction-data >.attraction-img {
     width: 540px;
@@ -190,7 +131,6 @@ header >.head >.menu >li {
     /* border: none; */
 }
 
-
 .booking-title {
     font-weight: bolder;
     padding-bottom: 15px;
@@ -204,6 +144,8 @@ header >.head >.menu >li {
 .label {
     margin:auto 5px;
 }
+
+/* ==== */
 
 hr {
     max-width: 1200px;
@@ -231,26 +173,8 @@ hr {
 }
 
 /* ==== */
-footer {
-    width: 100%;
-    display: flex;
-    background-color: #757575;
-    height: 104px;
-    color: #ffffff;
-}
-
-footer >div {
-    margin: auto;
-}
-
-/* ==== */
 
 @media (max-width:1200px) {
-
-    header >.head {
-        margin: 10px 0px 10px 10px;
-        /* width: 100%; */
-    }
 
     .attraction-data {
         max-width: 100%;

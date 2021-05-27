@@ -1,26 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>台北一日遊</title>
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet">
+{% extends "base.html" %}
+
+{% block css %}
     <link rel="stylesheet" type="text/css" href="/css/index.css">
-    <!-- <script src="/js/index.js"></script> -->
-</head>
-<body>
-    <header>
-        <div class="head">
-            <div class="title">台北一日遊</div>
-            <ul class="menu">
-                <li>預定行程</li>
-                <li>登入/註冊</li>
-            </ul>
-            </div>
-        </div>
-    </header>
+{% endblock %}
+
+{% block title %}台北一日遊{% endblock %}
+
+{% block main %}
     <nav>
         <div class="memo">
             <div class="memo1">輕鬆享受台北一日悠閒</div>
@@ -47,9 +33,8 @@
             </div>
         </article> -->
     </section>
-    <footer>
-        <div>COPYRIGHT © 2021 台北一日遊</div>
-    </footer>
+{% endblock %}
+
+{% block script %}
     <script src="/js/index.js"></script>
-</body>
-</html>
+{% endblock %}
