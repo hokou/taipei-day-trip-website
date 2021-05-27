@@ -35,6 +35,7 @@ header >.head >.title {
     font-size: 30px;
     color: #448899;
     text-align: center;
+    cursor: pointer;
 }
 
 ul li{
@@ -45,6 +46,7 @@ ul li{
 
 header >.head >.menu {
     display: flex;
+    cursor: pointer;
 }
 
 header >.head >.menu >li {
@@ -55,6 +57,19 @@ header >.head >.menu >li {
 
 .buffer {
     height: 54px;
+}
+
+/* ==== */
+
+.login_mark {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.25);
+    width: 100%;
+    height: 100%;
 }
 
 /* ==== */
