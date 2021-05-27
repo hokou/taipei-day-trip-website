@@ -31,7 +31,11 @@ header >.head {
     
 }
 
-header >.head >.title {
+header >.head >a {
+    text-decoration:none;
+}
+
+header >.head >a >.title {
     font-size: 30px;
     color: #448899;
     text-align: center;
