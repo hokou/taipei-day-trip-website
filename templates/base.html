@@ -22,10 +22,34 @@
             </div>
         </div>
     </header>
-    <div class="login_mark"></div>
-    <!-- <div class="login"></div>
-    <div class="signup"></div> -->
     <div class="buffer"></div>
+    <div class="login_mark">
+        <div class="user_model" id="login">
+            <form class="user_form" id="login_form" action="/api/user">
+                <img class="close" id="login_close" src="{{url_for('static', filename='img/icon_close.png')}}" alt="">
+                <div class="top_bar"></div>
+                <div class="header">登入會員帳號</div>
+                <input class="input" id="login_email" type="email" placeholder="輸入電子信箱" name="email">
+                <input class="input" id="login_password" type="password" placeholder="輸入密碼" name="password">
+                <small class="message"></small>
+                <button class="button">登入帳戶</button>
+                <div class="link" id="signup_link">還沒有帳戶？點此註冊</div>
+            </form>
+        </div>
+        <div class="user_model" id="signup">
+            <form class="user_form" id="signup_form" action="/api/user">
+                <img class="close" id="signup_close" src="{{url_for('static', filename='img/icon_close.png')}}" alt="">
+                <div class="top_bar"></div>
+                <div class="header">註冊會員帳號</div>
+                <input class="input" id="signup_name" type="text" placeholder="輸入姓名" name="email">
+                <input class="input" id="signup_email" type="email" placeholder="輸入電子信箱" name="email">
+                <input class="input" id="signup_password" type="password" placeholder="輸入密碼" name="password">
+                <small class="message"></small>
+                <button class="button">註冊新帳戶</button>
+                <div class="link" id="login_link">已經有帳戶了？點此登入</div>
+            </form>
+        </div>
+    </div>
     {% block main %}{% endblock %}
     <footer>
         <div>COPYRIGHT © 2021 台北一日遊</div>
