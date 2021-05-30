@@ -59,6 +59,10 @@ header >.head >.menu >li {
     color: #666666;
 }
 
+header >.head >.menu >.hide {
+    display: none;
+}
+
 .buffer {
     height: 54px;
 }

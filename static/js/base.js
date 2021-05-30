@@ -1,5 +1,6 @@
 
 let login_signup = document.getElementById("login_signup");
+let logout = document.getElementById("logout");
 
 let login_mark = document.querySelector(".login_mark");
 let login = document.querySelector("#login");
@@ -45,4 +46,23 @@ login_mark.addEventListener("click", event => {
         signup.style.display = "none";
         login_mark.style.display = "none";
     }
+});
+
+// user_api
+const user_url = "/api/user";
+
+fetch(user_url).then((res) => res.json())
+.then((data) => {
+    if (data.data != null) {
+        // login_signup.innerText = "登出系統";
+        // login_signup.textContent = "登出系統";
+        login_signup.classList.add("hide");
+        logout.classList.remove("hide");
+        console.log(data);
+    } else {
+        console.log(data);
+    }
+})
+.catch((error) => {
+    console.log("err:", error)
 });

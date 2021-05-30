@@ -2,7 +2,7 @@ from flask import Flask, redirect, render_template, session, url_for, request, j
 import os
 from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
-from webmodel import db, Attraction
+from webmodel import db, Attraction, User
 import json
 import collections
 
@@ -20,7 +20,11 @@ host = os.getenv('host')
 username = os.getenv('username')
 password = os.getenv('password')
 database = os.getenv('database')
+secretkey = os.getenv('secretkey')
+
 # print(host,username,password,database)
+app.secret_key = secretkey.encode(encoding="utf-8")
+# print(app.secret_key)
 
 app.config['SQLALCHEMY_ECHO'] = True
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -38,7 +42,12 @@ error_message = {
 	"1":"景點編號不正確",
 	"2":"伺服器內部錯誤，請稍後再試",
 	"3":"頁數錯誤",
-	"4":"查無資料"
+	"4":"查無資料",
+	"5":"帳號或密碼錯誤",
+    "6":"帳號已經被註冊",
+    "7":"請註冊帳號",
+    "8":"請重新登入",
+	"9":"請先登出"
 }
 
 
@@ -182,6 +191,66 @@ def error_json(error_message):
 		"message": error_message
 	}
 	return res
+
+
+data = {
+	"id": 1,
+  	"name": "ply",
+  	"email": "ply@ply.com",
+  	"password": "12345678"
+}
+
+
+@app.route("/api/user", methods=["GET"])
+def user_get():
+	if request.method == "GET":
+		session["id"] = 1
+		session.clear()
+		if "id" in session:
+			print("OK")
+			state = 200
+			user_mess = user_json(data)
+		else:
+			user_mess = { 
+				"data": None
+			}
+			state = 200
+	return jsonify(user_mess), state
+
+
+@app.route("/api/user", methods=["POST"])
+def user_signup():
+	if request.method == "POST":
+		if "id" in session:
+			res = error_json(error_message["1"])
+			state = 400
+		return jsonify(res), state
+
+
+@app.route("/api/user", methods=["PATCH"])
+def user_login():
+	if request.method == "PATCH":
+		if "id" in session:
+			res = error_json(error_message["1"])
+			state = 400
+		return jsonify(res), state
+
+
+@app.route("/api/user", methods=["DELETE"])
+def user_logout():
+	if request.method == "DELETE":
+		if "id" in session:
+			res = error_json(error_message["1"])
+			state = 400
+		return jsonify(res), state
+
+
+def user_json (data):
+	user_mess = {
+		"data": data
+	}
+	print(user_mess)
+	return user_mess
 
 
 if __name__ == "__main__":
