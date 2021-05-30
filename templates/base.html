@@ -29,10 +29,10 @@
                 <img class="close" id="login_close" src="{{url_for('static', filename='img/icon_close.png')}}" alt="">
                 <div class="top_bar"></div>
                 <div class="header">登入會員帳號</div>
-                <input class="input" id="login_email" type="email" placeholder="輸入電子信箱" name="email">
-                <input class="input" id="login_password" type="password" placeholder="輸入密碼" name="password">
-                <small class="message"></small>
+                <input class="input" id="login_email" type="email" placeholder="輸入電子信箱" name="email" autofocus required>
+                <input class="input" id="login_password" type="password" placeholder="輸入密碼" name="password" required>
                 <button class="button">登入帳戶</button>
+                <small class="message"></small>
                 <div class="link" id="signup_link">還沒有帳戶？點此註冊</div>
             </form>
         </div>
@@ -41,11 +41,11 @@
                 <img class="close" id="signup_close" src="{{url_for('static', filename='img/icon_close.png')}}" alt="">
                 <div class="top_bar"></div>
                 <div class="header">註冊會員帳號</div>
-                <input class="input" id="signup_name" type="text" placeholder="輸入姓名" name="email">
-                <input class="input" id="signup_email" type="email" placeholder="輸入電子信箱" name="email">
-                <input class="input" id="signup_password" type="password" placeholder="輸入密碼" name="password">
-                <small class="message"></small>
+                <input class="input" id="signup_name" type="text" placeholder="輸入姓名" name="email" required>
+                <input class="input" id="signup_email" type="email" placeholder="輸入電子信箱" name="email" required>
+                <input class="input" id="signup_password" type="password" placeholder="輸入密碼" name="password" required>
                 <button class="button">註冊新帳戶</button>
+                <small class="message"></small>
                 <div class="link" id="login_link">已經有帳戶了？點此登入</div>
             </form>
         </div>

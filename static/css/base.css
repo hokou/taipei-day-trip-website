@@ -89,6 +89,7 @@ header >.head >.menu >li {
     z-index: 10000;
     overflow: hidden;
     animation: uptodown 0.2s linear;
+    box-shadow: 0px 0px 10px #666666;
 }
 
 @keyframes uptodown{
@@ -145,10 +146,6 @@ header >.head >.menu >li {
     /* margin-bottom: 10px; */
 }
 
-/* .message {
-
-} */
-
 .button {
     width: 310px;
     height: 47px;
@@ -160,10 +157,15 @@ header >.head >.menu >li {
     border-radius: 5px;
 }
 
+/* .message {
+
+} */
+
 .link {
     margin: 10px auto 15px auto;
     /* line-height: 57%; */
     color: #666666;
+    cursor: pointer;
 }
 
 /* ==== */

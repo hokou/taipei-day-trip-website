@@ -37,3 +37,12 @@ function close_2() {
     login_mark.style.display = "none";
     signup.style.display = "none";
 }
+
+login_mark.addEventListener("click", event => {
+    let et = event.target;
+    if (!login.contains(et) && !signup.contains(et)) {
+        login.style.display = "none";
+        signup.style.display = "none";
+        login_mark.style.display = "none";
+    }
+});
