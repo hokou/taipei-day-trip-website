@@ -51,18 +51,46 @@ login_mark.addEventListener("click", event => {
 // user_api
 const user_url = "/api/user";
 
-fetch(user_url).then((res) => res.json())
-.then((data) => {
-    if (data.data != null) {
-        // login_signup.innerText = "登出系統";
-        // login_signup.textContent = "登出系統";
-        login_signup.classList.add("hide");
-        logout.classList.remove("hide");
-        console.log(data);
-    } else {
-        console.log(data);
-    }
-})
-.catch((error) => {
-    console.log("err:", error)
-});
+// GET
+user_get()
+
+function user_get(){
+    fetch(user_url).then((res) => res.json())
+    .then((data) => {
+        if (data.data != null) {
+            // login_signup.innerText = "登出系統";
+            // login_signup.textContent = "登出系統";
+            login_signup.classList.add("hide");
+            logout.classList.remove("hide");
+            console.log(data);
+        } else {
+            console.log(data);
+        }
+    })
+    .catch((error) => {
+        console.log("err:", error)
+    });
+}
+
+// POST
+
+
+// PATCH
+
+
+// DELECT
+logout.addEventListener("click", user_logout)
+
+function user_logout(){
+    fetch(user_url,{method:'DELETE'}).then((res) => res.json())
+    .then((data) => {
+        if (data.ok) {
+            logout.classList.add("hide");
+            login_signup.classList.remove("hide");
+            console.log(data);
+        } 
+    })
+    .catch((error) => {
+        console.log("err:", error)
+    });
+}

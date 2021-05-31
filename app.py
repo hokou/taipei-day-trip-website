@@ -47,7 +47,8 @@ error_message = {
     "6":"帳號已經被註冊",
     "7":"請註冊帳號",
     "8":"請重新登入",
-	"9":"請先登出"
+	"9":"請先登出",
+	"10":"輸入資料格式錯誤"
 }
 
 
@@ -193,56 +194,131 @@ def error_json(error_message):
 	return res
 
 
-data = {
-	"id": 1,
-  	"name": "ply",
-  	"email": "ply@ply.com",
-  	"password": "12345678"
-}
+# test data
+# data = {
+# 	"id": 1,
+# 	"name": "ply",
+# 	"email": "ply@ply.com",
+# 	"password": "12345678"
+# }
 
 
 @app.route("/api/user", methods=["GET"])
 def user_get():
 	if request.method == "GET":
-		session["id"] = 1
-		session.clear()
+		# session["id"] = 1
+		# session.clear()
 		if "id" in session:
 			print("OK")
+			data = {
+				"id": session["id"],
+				"name": session["name"],
+				"email": session["email"]
+			}
+			res = user_json(data)
 			state = 200
-			user_mess = user_json(data)
 		else:
-			user_mess = { 
+			res = { 
 				"data": None
 			}
 			state = 200
-	return jsonify(user_mess), state
+	
+	return jsonify(res), state
 
 
 @app.route("/api/user", methods=["POST"])
 def user_signup():
 	if request.method == "POST":
-		if "id" in session:
-			res = error_json(error_message["1"])
-			state = 400
-		return jsonify(res), state
+		try:
+			user_data = request.get_json()
+			name = user_data['name']
+			email = user_data['email']
+			password = user_data['password']
+			if "id" in session:
+				res = error_json(error_message["9"])
+				state = 400
+				return jsonify(res), state
+			if name == None or email == None or password == None:
+				res = error_json(error_message["10"])
+				state = 400
+				return jsonify(res), state
+			else:
+				query = User.query.filter_by(email=email).first()
+				print("query",query)
+				if query != None:
+					res = error_json(error_message["6"])
+					state = 400
+					return jsonify(res), state
+				else:
+					signup_data = User(name=name, email=email, password=password)
+					db.session.add(signup_data)
+					db.session.commit()
+					print("signup ok")
+					res = {
+						"ok": True
+					}
+					state = 200
+					return jsonify(res), state
+		except Exception as e:
+			print(e)
+			res = error_json(error_message["2"])
+			state = 500
+			return jsonify(res), state
 
 
 @app.route("/api/user", methods=["PATCH"])
 def user_login():
 	if request.method == "PATCH":
-		if "id" in session:
-			res = error_json(error_message["1"])
-			state = 400
-		return jsonify(res), state
+		try:
+			user_data = request.get_json()
+			email = user_data['email']
+			password = user_data['password']
+			if "id" in session:
+				res = error_json(error_message["1"])
+				state = 400
+				return jsonify(res), state
+			if email == None or password == None:
+				res = error_json(error_message["10"])
+				state = 400
+				return jsonify(res), state
+			else:
+				query = User.query.filter_by(email=email).first()
+				print("query",query)
+				if query == None:
+					res = error_json(error_message["5"])
+					state = 400
+					return jsonify(res), state
+				else:
+					session["id"] = query.id
+					session["name"] = query.name
+					session["email"] = query.email
+					res = {
+						"ok": True
+					}
+					state = 200
+					return jsonify(res), state
+		except Exception as e:
+			print(e)
+			res = error_json(error_message["2"])
+			state = 500
+			return jsonify(res), state
+
 
 
 @app.route("/api/user", methods=["DELETE"])
 def user_logout():
 	if request.method == "DELETE":
-		if "id" in session:
-			res = error_json(error_message["1"])
-			state = 400
-		return jsonify(res), state
+		session.pop("id", None)
+		session.pop("name", None)
+		session.pop("email", None)
+		# session.pop("password", None)
+		session.clear()
+		res = {
+			"ok": True
+		}
+		state = 200
+	
+	return jsonify(res), state
 
 
 def user_json (data):
