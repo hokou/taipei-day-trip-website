@@ -10,12 +10,21 @@ let signup_close = document.querySelector("#signup_close");
 let signup_link = document.querySelector("#signup_link")
 let login_link = document.querySelector("#login_link")
 
+let login_form = document.querySelector("#login_form")
+let signup_form = document.querySelector("#signup_form")
+let login_message = document.querySelector("#login_message")
+let signup_message = document.querySelector("#signup_message")
+
 login_signup.addEventListener("click", show_1)
 login_close.addEventListener("click",close_1)
 signup_close.addEventListener("click",close_2)
 
 signup_link.addEventListener("click",show_2)
 login_link.addEventListener("click",show_1)
+
+login_form.addEventListener("click", message_clear)
+signup_form.addEventListener("click", message_clear)
+
 
 function show_1() {
     login_mark.style.display = "block";
@@ -48,6 +57,12 @@ login_mark.addEventListener("click", event => {
     }
 });
 
+function message_clear(){
+    login_message.textContent = "";
+    signup_message.textContent = "";
+}
+
+
 // user_api
 const user_url = "/api/user";
 
@@ -73,9 +88,81 @@ function user_get(){
 }
 
 // POST
+signup_form.addEventListener("submit", e => {
+    e.preventDefault();
+    user_signup();
+})
+
+function user_signup(){
+    let signup_name = document.querySelector("#signup_name");
+    let signup_email = document.querySelector("#signup_email");
+    let signup_password = document.querySelector("#signup_password");
+    let data = {
+        "name": signup_name.value,
+        "email": signup_email.value,
+        "password": signup_password.value
+    };
+
+    fetch(user_url,{
+        method:'POST',
+        body:JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json'
+          }
+    }).then((res) => res.json())
+    .then((data) => {
+        if (data.ok) {
+            console.log(data);
+            signup_message.textContent = "註冊成功";
+        } else if (data.error) {
+            console.log(data);
+            signup_message.textContent = data.message;
+        }
+        clear_input();
+    })
+    .catch((error) => {
+        console.log("err:", error)
+    });
+}
 
 
 // PATCH
+login_form.addEventListener("submit", e => {
+    e.preventDefault();
+    user_login();
+})
+
+function user_login(){
+    let login_email = document.querySelector("#login_email");
+    let login_password = document.querySelector("#login_password");
+    let data = {
+        "email": login_email.value,
+        "password": login_password.value
+    };
+
+    fetch(user_url,{
+        method:'PATCH',
+        body:JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json'
+          }
+    }).then((res) => res.json())
+    .then((data) => {
+        if (data.ok) {
+            login_signup.classList.add("hide");
+            logout.classList.remove("hide");
+            console.log(data);
+            login_message.textContent = "登入成功";
+        } else if (data.error) {
+            console.log(data);
+            login_message.textContent = data.message;
+        }
+        clear_input();
+    })
+    .catch((error) => {
+        console.log("err:", error)
+    });
+}
 
 
 // DELECT
@@ -92,5 +179,13 @@ function user_logout(){
     })
     .catch((error) => {
         console.log("err:", error)
+    });
+}
+
+
+function clear_input() {
+    let clear = document.querySelectorAll(".input")
+    clear.forEach(element => {
+        element.value = ""
     });
 }

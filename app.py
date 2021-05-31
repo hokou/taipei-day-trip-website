@@ -45,10 +45,10 @@ error_message = {
 	"4":"查無資料",
 	"5":"帳號或密碼錯誤",
     "6":"帳號已經被註冊",
-    "7":"請註冊帳號",
-    "8":"請重新登入",
+    "7":"輸入資料錯誤，請重新註冊",
+    "8":"輸入資料錯誤，請重新登入",
 	"9":"請先登出",
-	"10":"輸入資料格式錯誤"
+	"10":""
 }
 
 
@@ -239,7 +239,7 @@ def user_signup():
 				state = 400
 				return jsonify(res), state
 			if name == None or email == None or password == None:
-				res = error_json(error_message["10"])
+				res = error_json(error_message["7"])
 				state = 400
 				return jsonify(res), state
 			else:
@@ -274,11 +274,11 @@ def user_login():
 			email = user_data['email']
 			password = user_data['password']
 			if "id" in session:
-				res = error_json(error_message["1"])
+				res = error_json(error_message["9"])
 				state = 400
 				return jsonify(res), state
 			if email == None or password == None:
-				res = error_json(error_message["10"])
+				res = error_json(error_message["8"])
 				state = 400
 				return jsonify(res), state
 			else:
@@ -288,7 +288,11 @@ def user_login():
 					res = error_json(error_message["5"])
 					state = 400
 					return jsonify(res), state
-				else:
+				elif email != query.email or password != query.password:
+					res = error_json(error_message["5"])
+					state = 400
+					return jsonify(res), state
+				elif email == query.email and password == query.password:
 					session["id"] = query.id
 					session["name"] = query.name
 					session["email"] = query.email
