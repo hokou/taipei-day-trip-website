@@ -32,7 +32,7 @@ class Attraction(db.Model):
         self.images = images
 
 class User(db.Model):
-    __tablename__ = 'user_test'
+    __tablename__ = 'user'
     id = db.Column(db.BigInteger, autoincrement=True, primary_key=True)
     name = db.Column(db.VARCHAR(255), nullable=False)
     email = db.Column(db.VARCHAR(255), nullable=False)

@@ -67,6 +67,10 @@
     align-self: flex-start;
 }
 
+.left, .right {
+    cursor: pointer;
+}
+
 .attraction-data >.attraction-img >.carousel-slide >.po {
     position: absolute;
     align-self: center;

@@ -75,8 +75,8 @@ function user_get(){
         if (data.data != null) {
             // login_signup.innerText = "登出系統";
             // login_signup.textContent = "登出系統";
-            login_signup.classList.add("hide");
-            logout.classList.remove("hide");
+            login_signup.classList.add("menuhide");
+            logout.classList.remove("menuhide");
             console.log(data);
         } else {
             console.log(data);
@@ -149,10 +149,11 @@ function user_login(){
     }).then((res) => res.json())
     .then((data) => {
         if (data.ok) {
-            login_signup.classList.add("hide");
-            logout.classList.remove("hide");
+            login_signup.classList.add("menuhide");
+            logout.classList.remove("menuhide");
             console.log(data);
             login_message.textContent = "登入成功";
+            setTimeout(close_1, 1000);
         } else if (data.error) {
             console.log(data);
             login_message.textContent = data.message;
@@ -172,8 +173,8 @@ function user_logout(){
     fetch(user_url,{method:'DELETE'}).then((res) => res.json())
     .then((data) => {
         if (data.ok) {
-            logout.classList.add("hide");
-            login_signup.classList.remove("hide");
+            logout.classList.add("menuhide");
+            login_signup.classList.remove("menuhide");
             console.log(data);
         } 
     })

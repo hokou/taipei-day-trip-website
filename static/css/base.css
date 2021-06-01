@@ -63,7 +63,7 @@ header >.head >.menu >li {
     color: #666666;
 }
 
-header >.head >.menu >.hide {
+header >.head >.menu >.menuhide {
     display: none;
 }
 
