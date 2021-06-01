@@ -114,6 +114,7 @@ function user_signup(){
         if (data.ok) {
             console.log(data);
             signup_message.textContent = "註冊成功";
+            setTimeout(show_1, 2000);
         } else if (data.error) {
             console.log(data);
             signup_message.textContent = data.message;
