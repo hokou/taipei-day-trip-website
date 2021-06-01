@@ -182,6 +182,7 @@ function user_logout(){
     .catch((error) => {
         console.log("err:", error)
     });
+    message_clear();
 }
 
 
