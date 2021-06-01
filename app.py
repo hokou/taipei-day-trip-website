@@ -2,7 +2,7 @@ from flask import Flask, redirect, render_template, session, url_for, request, j
 import os
 from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
-from webmodel import db, Attraction
+from webmodel import db, Attraction, User
 import json
 import collections
 
@@ -20,7 +20,11 @@ host = os.getenv('host')
 username = os.getenv('username')
 password = os.getenv('password')
 database = os.getenv('database')
+secretkey = os.getenv('secretkey')
+
 # print(host,username,password,database)
+app.secret_key = secretkey.encode(encoding="utf-8")
+# print(app.secret_key)
 
 app.config['SQLALCHEMY_ECHO'] = True
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -38,7 +42,13 @@ error_message = {
 	"1":"景點編號不正確",
 	"2":"伺服器內部錯誤，請稍後再試",
 	"3":"頁數錯誤",
-	"4":"查無資料"
+	"4":"查無資料",
+	"5":"帳號或密碼錯誤",
+    "6":"帳號已經被註冊",
+    "7":"輸入資料錯誤，請重新註冊",
+    "8":"輸入資料錯誤，請重新登入",
+	"9":"請先登出",
+	"10":""
 }
 
 
@@ -182,6 +192,145 @@ def error_json(error_message):
 		"message": error_message
 	}
 	return res
+
+
+# test data
+# data = {
+# 	"id": 1,
+# 	"name": "ply",
+# 	"email": "ply@ply.com",
+# 	"password": "12345678"
+# }
+
+
+@app.route("/api/user", methods=["GET"])
+def user_get():
+	if request.method == "GET":
+		# session["id"] = 1
+		# session.clear()
+		if "id" in session:
+			print("OK")
+			data = {
+				"id": session["id"],
+				"name": session["name"],
+				"email": session["email"]
+			}
+			res = user_json(data)
+			state = 200
+		else:
+			res = { 
+				"data": None
+			}
+			state = 200
+	
+	return jsonify(res), state
+
+
+@app.route("/api/user", methods=["POST"])
+def user_signup():
+	if request.method == "POST":
+		try:
+			user_data = request.get_json()
+			name = user_data['name']
+			email = user_data['email']
+			password = user_data['password']
+			if "id" in session:
+				res = error_json(error_message["9"])
+				state = 400
+				return jsonify(res), state
+			if name == None or email == None or password == None:
+				res = error_json(error_message["7"])
+				state = 400
+				return jsonify(res), state
+			else:
+				query = User.query.filter_by(email=email).first()
+				print("query",query)
+				if query != None:
+					res = error_json(error_message["6"])
+					state = 400
+					return jsonify(res), state
+				else:
+					signup_data = User(name=name, email=email, password=password)
+					db.session.add(signup_data)
+					db.session.commit()
+					print("signup ok")
+					res = {
+						"ok": True
+					}
+					state = 200
+					return jsonify(res), state
+		except Exception as e:
+			print(e)
+			res = error_json(error_message["2"])
+			state = 500
+			return jsonify(res), state
+
+
+@app.route("/api/user", methods=["PATCH"])
+def user_login():
+	if request.method == "PATCH":
+		try:
+			user_data = request.get_json()
+			email = user_data['email']
+			password = user_data['password']
+			if "id" in session:
+				res = error_json(error_message["9"])
+				state = 400
+				return jsonify(res), state
+			if email == None or password == None:
+				res = error_json(error_message["8"])
+				state = 400
+				return jsonify(res), state
+			else:
+				query = User.query.filter_by(email=email).first()
+				print("query",query)
+				if query == None:
+					res = error_json(error_message["5"])
+					state = 400
+					return jsonify(res), state
+				elif email != query.email or password != query.password:
+					res = error_json(error_message["5"])
+					state = 400
+					return jsonify(res), state
+				elif email == query.email and password == query.password:
+					session["id"] = query.id
+					session["name"] = query.name
+					session["email"] = query.email
+					res = {
+						"ok": True
+					}
+					state = 200
+					return jsonify(res), state
+		except Exception as e:
+			print(e)
+			res = error_json(error_message["2"])
+			state = 500
+			return jsonify(res), state
+
+
+
+@app.route("/api/user", methods=["DELETE"])
+def user_logout():
+	if request.method == "DELETE":
+		session.pop("id", None)
+		session.pop("name", None)
+		session.pop("email", None)
+		# session.pop("password", None)
+		session.clear()
+		res = {
+			"ok": True
+		}
+		state = 200
+	
+	return jsonify(res), state
+
+
+def user_json (data):
+	user_mess = {
+		"data": data
+	}
+	print(user_mess)
+	return user_mess
 
 
 if __name__ == "__main__":
