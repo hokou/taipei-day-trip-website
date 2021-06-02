@@ -183,7 +183,7 @@ footer {
     width: 100%;
     display: flex;
     background-color: #757575;
-    height: 104px;
+    min-height: 104px;
     color: #ffffff;
 }
 

@@ -21,6 +21,7 @@ function attraction_fetch(attractionurl) {
         .then((result) => {
             console.log(result.data);
             attraction_create(result.data);
+            setdate();
         }).catch(error => console.log("err:", error));        
 }
 
@@ -94,7 +95,7 @@ let po_all = document.getElementsByClassName("p");
 prevBtn.addEventListener("click", previous_img)
 nextBtn.addEventListener("click", next_img)
 
-function next_img (){
+function next_img(){
     let img_num = img_all.length;
     let nextindex = slideindex + 1;
     if (nextindex >= img_num) {
@@ -111,7 +112,7 @@ function next_img (){
     }
 }
 
-function previous_img (){
+function previous_img(){
     let img_num = img_all.length;
     let previndex = slideindex - 1;
     if (previndex <= -1) {
@@ -128,4 +129,17 @@ function previous_img (){
     }
 }
 
-setInterval('next_img()',timeout)
+setInterval('next_img()',timeout);
+
+// 設定日期 min
+
+function setdate(){
+    let today = new Date();
+    let year = today.getFullYear();
+    let month = today.getMonth();
+    let date = today.getDate();
+    let tommorow = `${year}-${(month+1).toString().padStart(2, "0")}-${(date+1).toString().padStart(2, "0")}`;
+    let bookingDate = document.getElementById("bookingDate");
+    bookingDate.setAttribute('min', tommorow);
+    console.log(tommorow);
+}

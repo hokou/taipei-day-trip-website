@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="/css/booking.css">
+{% endblock %}
+
+{% block title %}台北一日遊-預訂行程{% endblock %}
+
+{% block main %}
+    <section class="booking-head">
+        <div class="booking-head">您好，<span id="username"></span>，待預訂的行程如下：</div>
+    </section>
+    <section class="booking-data">
+        <div class="booking-no bookinghide">目前沒有任何待預訂的行程</div>
+        <div class="booking-yes">
+            <div></div>
+            <div>
+                <div><span>日期：</span><span></span></div>
+                <div><span>時間：</span><span></span></div>
+                <div><span>費用：</span><span></span></div>
+                <div><span>地點：</span><span></span></div>
+            </div>
+            <img class="delect" id="booking-delect" src="{{url_for('static', filename='img/delete.png')}}" alt="">
+        </div>
+        <hr>
+    </section>
+    <section class="booking-check">
+        <form action="" id="booking-form" class="booking-form">
+            <div>
+                <div>您的聯絡資訊</div>
+                <div>
+                    <label for="booking_name">聯絡姓名：</label>
+                    <input type="text" id="booking_name" placeholder="您的姓名" name="name" class="" />
+                </div>
+                <div>
+                    <label for="booking_email">電子信箱：</label>
+                    <input type="email" id="booking_email" placeholder="您的電子信箱" name="email" class="" />
+                </div>
+                <div>
+                    <label for="booking_phone">手機號碼：</label>
+                    <input type="tel" id="booking_phone" placeholder="您的手機號碼" name="phone" class="" />
+                </div>
+                <div>請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</div>
+            </div>
+            <hr>
+            <div>
+                <div>信用卡付款資訊</div>
+                <div>
+                    <label for="card-number">卡片號碼：</label>
+                    <div class="" id="card-number"></div>
+                </div>
+                <div>
+                    <label for="card-date">過期時間：</label>
+                    <div class="" id="card-date"></div>
+                </div>
+                <div>
+                    <label for="card-ccv">驗證密碼：</label>
+                    <div class="" id="card-ccv"></div>
+                </div>
+                <hr>
+            </div>
+            <div>
+                <div class="">總價：新台幣 <span id="booking-cost"></span> 元</div>
+                <button class="" id="bookingbtn">確認訂購並付款</button>
+            </div>
+        </form>
+    </section>
+{% endblock %}
+
+{% block script %}
+    <script src="/js/booking.js"></script>
+{% endblock %}
