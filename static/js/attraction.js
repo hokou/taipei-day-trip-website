@@ -131,6 +131,7 @@ function previous_img(){
 
 setInterval('next_img()',timeout);
 
+// document.write('<script src="js/base.js"></script>');
 // 設定日期 min
 
 function setdate(){
@@ -142,4 +143,73 @@ function setdate(){
     let bookingDate = document.getElementById("bookingDate");
     bookingDate.setAttribute('min', tommorow);
     console.log(tommorow);
+}
+
+const booking_url = "/api/booking";
+
+let booking_form = document.getElementById("booking-form");
+let booking_message = document.getElementById("booking_message");
+
+booking_form.addEventListener("submit", e => {
+    e.preventDefault();
+    user_check();
+})
+
+booking_form.addEventListener("click", () => {
+    booking_message.textContent="";
+});
+
+function user_check() {
+    fetch(user_url).then((res) => res.json())
+    .then((data) => {
+        if (data.data != null) {
+            login_signup.classList.add("menuhide");
+            logout.classList.remove("menuhide");
+            console.log("true",data);
+            booking_check();
+        } else {
+            show_1();
+            console.log("false",data);
+        }
+    })
+    .catch((error) => {
+        console.log("err:", error)
+    });
+}
+
+function booking_check() {
+    let attractionarray = locationurl.split("/");
+    let id = attractionarray[attractionarray.length-1];
+    let bookingDate = document.getElementById("bookingDate");
+    let checkedValue = document.querySelector(".booking-time:checked").value;
+    let price = document.getElementById("price");
+    let booking_data = {
+        "attractionId": Number(id),
+        "date": bookingDate.value,
+        "time": checkedValue,
+        "price": Number(price.innerText)
+    };
+    console.log(booking_data);
+
+    fetch(booking_url,{
+        method:'POST',
+        body:JSON.stringify(booking_data),
+        headers: {
+            'Content-Type': 'application/json'
+          }
+    }).then((res) => res.json())
+    .then((data) => {
+        if (data.ok) {
+            console.log(data);
+            booking_message.textContent = "預訂成功，5 秒後進入預訂頁面或直接點擊進入";
+            setTimeout('document.location.href="/booking"', 5000);
+        } else if (data.error) {
+            console.log(data);
+            booking_message.textContent = data.message;
+        }
+    })
+    .catch((error) => {
+        console.log("err:", error)
+    });
+
 }

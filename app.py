@@ -48,7 +48,7 @@ error_message = {
     "7":"輸入資料錯誤，請重新註冊",
     "8":"輸入資料錯誤，請重新登入",
 	"9":"請先登出",
-	"10":""
+	"10":"請先登入"
 }
 
 
@@ -331,6 +331,108 @@ def user_json (data):
 	}
 	print(user_mess)
 	return user_mess
+
+
+@app.route("/api/booking", methods=["GET"])
+def booking_get():
+	if request.method == "GET":
+		# if "id" in session:
+		# 	if "booking_data" in session:
+		# 		booking_dict = session["booking_data"]
+		# 		print("---------",booking_dict)
+		# 		booking_dict = dict(booking_dict)
+		# 		print("---------",booking_dict)
+		# 		attractionId = booking_dict["attractionId"]
+		# 		query = Attraction.query.filter_by(id=attractionId).first()
+		# 		res = booking_JSON(booking_dict, query)
+		# 		state = 200
+		try:
+			if "id" in session:
+				if "booking_data" in session:
+					booking_dict = session["booking_data"]
+					booking_dict = dict(booking_dict)
+					attractionId = booking_dict["attractionId"]
+					query = Attraction.query.filter_by(id=attractionId).first()
+					res = booking_JSON(booking_dict, query)
+					state = 200
+				else:
+					res = {
+						"data": None
+					}
+					state = 200
+			else:
+				res = error_json(error_message["10"])
+				state = 400
+
+		except Exception as e:
+			print(e)
+			res = error_json(error_message["2"])
+			state = 500
+	
+		return jsonify(res), state
+
+		
+
+@app.route("/api/booking", methods=["POST"])
+def bookking_new():
+	if request.method == "POST":
+		try:
+			if "id" in session:
+				booking_data = request.get_json()
+				session["booking_data"] = booking_data
+				res = {
+					"ok": True
+				}
+				state = 200
+			else:
+				res = error_json(error_message["10"])
+				state = 400
+
+		except Exception as e:
+			print(e)
+			res = error_json(error_message["2"])
+			state = 500
+	
+		return jsonify(res), state
+
+
+@app.route("/api/booking", methods=["DELETE"])
+def booking_delect():
+	if request.method == "DELETE":
+		try:
+			if "id" in session:
+				session.pop("booking_data", None)
+				res = {
+					"ok": True
+				}
+				state = 200
+			else:
+				res = error_json(error_message["10"])
+				state = 200
+		except Exception as e:
+			print(e)
+			res = error_json(error_message["2"])
+			state = 500
+	
+		return jsonify(res), state
+
+
+def booking_JSON(booking_dict, query):
+	images = eval(query.images)
+	data = {
+		"data": {
+			"attraction": {
+				"id": query.id,
+				"name": query.name,
+				"address": query.address,
+				"image": images[0]
+			},
+			"date": booking_dict["date"],
+			"time": booking_dict["time"],
+			"price": booking_dict["price"]
+			}
+	}
+	return data
 
 
 if __name__ == "__main__":

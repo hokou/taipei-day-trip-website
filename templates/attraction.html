@@ -38,28 +38,28 @@
                     </div>
                     <div class="booking-title time-selection" id="time">
                         <span  class="booking-title">選擇時間：</span>
-                        <input type="radio" id="AM" name="time" value="AM" checked>
+                        <input class="booking-time" type="radio" id="AM" name="time" value="morning" checked>
                         <label for="AM" class="booking-text label">上半天</label>
-                        <input type="radio" id="PM" name="time" value="PM">
+                        <input class="booking-time" type="radio" id="PM" name="time" value="afternoon">
                         <label for="PM" class="booking-text label">下半天</label>
                     </div>
                     <div  class="booking-title">導覽費用：新台幣 <span class="booking-text" id="price">2000</span> 元</div>
                     <button class="booking-button" type="submit">開始預訂行程</button>
+                    <a href="/booking"><div class="booking_message" id="booking_message"></div></a>
                 </form>
             </div>
         </div>
     </section>
     <hr>
     <div class="attraction-memo">
-        <article class="content-reg description" id="description">
-        </article>
+        <article class="description" id="description"></article>
         <article class="address">
             <p class="memo-text">景點地址：</p>
-            <p class="content" id="address"></p>
+            <p class="" id="address"></p>
         </article>
         <article class="transportation">
             <p class="memo-text">交通方式：</p>
-            <p class="content" id="transport"></p>
+            <p class="" id="transport"></p>
         </article>
     </div>
 {% endblock %}
