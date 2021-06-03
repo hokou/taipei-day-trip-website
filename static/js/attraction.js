@@ -201,7 +201,8 @@ function booking_check() {
     .then((data) => {
         if (data.ok) {
             console.log(data);
-            booking_message.textContent = "預訂成功，5 秒後進入預訂頁面或直接點擊進入";
+            // booking_message.textContent = "預訂成功，5 秒後進入預訂頁面或直接點擊進入";
+            booking_message.innerHTML = '<a href="/booking">' + '預訂成功，5 秒後進入預訂頁面或直接點擊進入' + '</a>';
             setTimeout('document.location.href="/booking"', 5000);
         } else if (data.error) {
             console.log(data);
