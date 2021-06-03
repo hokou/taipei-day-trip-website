@@ -40,7 +40,7 @@ section {
 .booking-image {
     width: 250px;
     height: 200px;
-    background-image: url("http://www.travel.taipei/d_upload_ttn/sceneadmin/pic/11000340.jpg");
+    background-image: url();
     background-repeat: space;
     background-size: contain;
     background-position:center;
@@ -124,12 +124,12 @@ hr {
     align-items:flex-end;
 }
 
- .cost-text {
+.cost-text {
     padding-bottom: 25px;
     font-weight: bolder;
- }
+}
 
- .bookingbtn {
+.bookingbtn {
     width: 175px;
     border-radius: 5px;
     border: 1px solid #448899;
@@ -138,28 +138,30 @@ hr {
     padding: 10px 20px;
     font-size: 19px;
     line-height: 16px;
- }
+}
 
- /* ==== */
+/* ==== */
 
- @media (max-width:1200px) {
+@media (max-width:1200px) {
 
     .booking-head {
         max-width: 1000px;
-        width: 100%;
-        padding: 40px 0;
+        /* width: 100%; */
+        padding: 40px 10px;
         margin: auto;
     }
 
     .booking-title, .booking-data {
         max-width: 100%;
+        padding: 0;
     }
 
     .booking-check {
         max-width: 100%;
-        padding: 0;
+        padding: 0 10px;
     }
- }
+
+}
 
 
 @media (max-width:600px) {
@@ -174,8 +176,9 @@ hr {
 
     .booking-image {
         margin: 30px auto;
-        width: 340px;
-        height: 200px;
+        width: 100%;
+        max-width: 340px;
+        min-height: 200px;
         background-repeat: space;
         background-size: 100% auto;
     }
