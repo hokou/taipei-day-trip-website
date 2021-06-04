@@ -192,3 +192,21 @@ function clear_input() {
         element.value = ""
     });
 }
+
+let booking = document.querySelector("#booking")
+
+booking.addEventListener("click", booking_link)
+
+function booking_link() {
+    fetch(user_url).then((res) => res.json())
+    .then((data) => {
+        if (data.data != null) {
+            document.location.href="/booking";
+        } else {
+            show_1();
+        }
+    })
+    .catch((error) => {
+        console.log("err:", error)
+    });
+}

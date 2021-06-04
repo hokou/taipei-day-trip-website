@@ -31,35 +31,35 @@
             <div class="booking">
                 <div class="booking-title">訂購導覽行程</div>
                 <div class="booking-text">以此景點為中心的一日行程，帶您探索城市角落故事</div>
-                <form action="/booking" class="booking-form">
+                <form action="/api/booking" id="booking-form" class="booking-form">
                     <div class="booking-title date-selection">
                         <label for="bookingDate"  class="booking-title">選擇日期：</label>
                         <input type="date" name="date" id="bookingDate" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
                     </div>
                     <div class="booking-title time-selection" id="time">
                         <span  class="booking-title">選擇時間：</span>
-                        <input type="radio" id="AM" name="time" value="AM" checked>
+                        <input class="booking-time" type="radio" id="AM" name="time" value="morning" checked>
                         <label for="AM" class="booking-text label">上半天</label>
-                        <input type="radio" id="PM" name="time" value="PM">
+                        <input class="booking-time" type="radio" id="PM" name="time" value="afternoon">
                         <label for="PM" class="booking-text label">下半天</label>
                     </div>
                     <div  class="booking-title">導覽費用：新台幣 <span class="booking-text" id="price">2000</span> 元</div>
-                    <button class="booking-button" type="button">開始預訂行程</button>
+                    <button class="booking-button" type="submit">開始預訂行程</button>
+                   <div class="booking_message" id="booking_message"></div>
                 </form>
             </div>
         </div>
     </section>
     <hr>
     <div class="attraction-memo">
-        <article class="content-reg description" id="description">
-        </article>
+        <article class="description" id="description"></article>
         <article class="address">
             <p class="memo-text">景點地址：</p>
-            <p class="content" id="address"></p>
+            <p class="" id="address"></p>
         </article>
         <article class="transportation">
             <p class="memo-text">交通方式：</p>
-            <p class="content" id="transport"></p>
+            <p class="" id="transport"></p>
         </article>
     </div>
 {% endblock %}
