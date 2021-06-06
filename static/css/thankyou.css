@@ -1,0 +1,48 @@
+/* ==== */
+
+section {
+    color: #666666;
+}
+
+.order {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 0;
+    border-bottom: 1px solid #E8E8E8;
+}
+
+.order-title {
+    max-width: 1000px;
+    margin: 0 auto;
+    margin-bottom: 30px;
+    font-size: 19px;
+    font-weight: bolder;
+}
+
+.order-data {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.order-no {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.order-yes {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.orderhide {
+    display: none;
+}
+
+.message-bold {
+    font-weight: bolder;
+}

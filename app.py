@@ -2,9 +2,11 @@ from flask import Flask, redirect, render_template, session, url_for, request, j
 import os
 from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
-from webmodel import db, Attraction, User
+from webmodel import db, Attraction, User, Order
 import json
 import collections
+from datetime import datetime
+import requests
 
 
 app = Flask(__name__,
@@ -21,6 +23,8 @@ username = os.getenv('username')
 password = os.getenv('password')
 database = os.getenv('database')
 secretkey = os.getenv('secretkey')
+PartnerKey = os.getenv('PartnerKey')
+MerchantID = os.getenv('MerchantID')
 
 # print(host,username,password,database)
 app.secret_key = secretkey.encode(encoding="utf-8")
@@ -48,9 +52,14 @@ error_message = {
     "7":"輸入資料錯誤，請重新註冊",
     "8":"輸入資料錯誤，請重新登入",
 	"9":"請先登出",
-	"10":"請先登入"
+	"10":"請先登入",
+	"11":"訂單更新失敗"
 }
 
+order_message = {
+	"0":"付款成功",
+	"1":"付款失敗",
+}
 
 # Pages
 @app.route("/")
@@ -67,6 +76,7 @@ def thankyou():
 	return render_template("thankyou.html")
 
 
+# attraction
 @app.route("/api/attractions")
 def attractions_api():
 	'''
@@ -203,6 +213,7 @@ def error_json(error_message):
 # }
 
 
+# user
 @app.route("/api/user", methods=["GET"])
 def user_get():
 	if request.method == "GET":
@@ -308,7 +319,6 @@ def user_login():
 			return jsonify(res), state
 
 
-
 @app.route("/api/user", methods=["DELETE"])
 def user_logout():
 	if request.method == "DELETE":
@@ -333,6 +343,7 @@ def user_json (data):
 	return user_mess
 
 
+# booking
 @app.route("/api/booking", methods=["GET"])
 def booking_get():
 	if request.method == "GET":
@@ -371,10 +382,9 @@ def booking_get():
 	
 		return jsonify(res), state
 
-		
 
 @app.route("/api/booking", methods=["POST"])
-def bookking_new():
+def booking_new():
 	if request.method == "POST":
 		try:
 			if "id" in session:
@@ -431,6 +441,167 @@ def booking_JSON(booking_dict, query):
 			"time": booking_dict["time"],
 			"price": booking_dict["price"]
 			}
+	}
+	return data
+
+
+# order
+@app.route("/api/order/<orderNumber>", methods=["GET"])
+def order_get(orderNumber):
+	if request.method == "GET":
+		try:
+			if "id" in session:
+				query = Order.query.filter_by(order_number=orderNumber).first()
+				if query != None:
+					res = order_JSON(query)
+					state = 200
+				else:
+					res = {
+						"data": None
+					}
+					state = 200
+			else:
+				res = error_json(error_message["10"])
+				state = 400
+
+		except Exception as e:
+			print(e)
+			res = error_json(error_message["2"])
+			state = 500
+	
+		return jsonify(res), state
+
+
+@app.route("/api/orders", methods=["POST"])
+def order_post():
+	if request.method == "POST":
+		try:
+			if "id" in session:
+				order_data = request.get_json()
+				session["order_data"] = order_data
+				time = datetime.now()
+				user_id = session["id"]
+				order_number = order_num(time, user_id)
+				# 代表未付款
+				order_status = 1
+				order_add(order_data, user_id, order_number, order_status)
+				req = order_to_tappay(order_data)
+				order_status = int(req["status"])
+				if order_status == 0:
+					order_mes = order_message["0"]
+					ret = order_change(order_number, order_status)
+					if ret != True:
+						res = error_json(error_message["11"])
+						state = 400
+						return jsonify(res), state
+				else:
+					order_mes = order_message["1"]
+				
+				res = {
+					"data": {
+						"number": order_number,
+						"payment": {
+							"status": order_status,
+							"message": order_mes
+						}
+					}
+				}
+				state = 200
+			else:
+				res = error_json(error_message["10"])
+				state = 400
+
+		except Exception as e:
+			print(e)
+			res = error_json(error_message["2"])
+			state = 500
+	
+		return jsonify(res), state
+
+
+def order_add(data, user_id, order_number, order_status):
+	order = data["order"]
+	trip = order["trip"]
+	contact = data["contact"]
+	order_data = Order(user_id=user_id, order_number=order_number, order_price=order["price"], order_status=order_status, 
+						trip_id=trip["attraction"]["id"], trip_date=trip["date"], trip_time=trip["time"], 
+						contact_name=contact["name"], contact_email=contact["email"], contact_phone=contact["phone"])
+	db.session.add(order_data)
+	db.session.commit()
+	print("order add ok")
+
+
+def order_change(order_number, order_status):
+	try:
+		query = Order.query.filter_by(order_number=order_number).first()
+		query.order_status = order_status
+		db.session.commit()
+		return True
+	except:
+		return False
+
+def order_to_tappay(order_data):
+	prime = order_data["prime"]
+	order = order_data["order"]
+	contact = order_data["contact"]
+	tappay_url = "https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime"
+	request_headers = {
+		"Content-Type": "application/json", 
+		"x-api-key": PartnerKey
+	}
+
+	request_body = {
+		"prime": prime,
+		"partner_key": PartnerKey,
+		"merchant_id": MerchantID,
+		"details":"TapPay Test",
+		"amount": order["price"],
+		"cardholder": {
+			"name": contact["name"],
+			"email": contact["email"],
+			"phone_number": contact["phone"],
+		},
+		"remember": True
+	}
+
+	request = requests.post(tappay_url, headers=request_headers, data=json.dumps(request_body, ensure_ascii=False).encode('utf8') )
+	req =request.json()
+
+	return req
+
+
+def order_num(time, id):
+	now_time = time.strftime("%Y%m%d%H%M%S")
+	id_num = str(id).zfill(5)
+	order_number = f"{now_time}{id_num}"
+	return order_number
+
+
+def order_JSON(query):
+	attraction_query = Attraction.query.filter_by(rowid=query.trip_id).first()
+	attraction_images = eval(attraction_query.images)
+
+	data = {
+		"data": {
+			"number": query.order_number,
+			"price": query.order_price,
+			"trip": {
+				"attraction": {
+					"id": query.trip_id,
+					"name": attraction_query.name,
+					"address": attraction_query.address,
+					"image": attraction_images[0]
+				},
+			"date": query.trip_date,
+			"time": query.trip_time
+			},
+			"contact": {
+			"name": query.contact_name,
+			"email": query.contact_email,
+			"phone": query.contact_phone
+			},
+			"status": query.order_status
+		}
 	}
 	return data
 

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="/css/thankyou.css">
+{% endblock %}
+
+{% block title %}台北一日遊-感謝{% endblock %}
+
+{% block main %}
+    <section class="order">
+        <div class="order-title">您好，<span id="username"></span>，訂單的資訊如下：</div>
+        <div class="order-data">
+            <div class="order-no orderhide">
+                <div><span class="message-bold">訊息：</span><span id="message-error"></span></div>
+            </div>
+            <div class="order-yes orderhide">
+                <div><span class="message-bold">訂單號碼：</span><span id="message-number"></span></div>
+                <div><span class="message-bold">付款狀態：</span><span id="message-status"></span></div>
+                <div><span class="message-bold">費用：</span><span id="message-price"></span>元</div>
+                <div><span class="message-bold">地點：</span><span id="message-name"></span></div>
+                <div><span class="message-bold">日期：</span><span id="message-date"></span></div>
+                <div><span class="message-bold">時間：</span><span id="message-time"></span></div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block script %}
+    <script src="/js/thankyou.js"></script>
+{% endblock %}
