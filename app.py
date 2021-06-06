@@ -482,7 +482,8 @@ def order_post():
 				time = datetime.now()
 				user_id = session["id"]
 				order_number = order_num(time, user_id)
-				order_status = 0
+				# 代表未付款
+				order_status = 1
 				order_add(order_data, user_id, order_number, order_status)
 				req = order_to_tappay(order_data)
 				order_status = int(req["status"])
@@ -521,7 +522,7 @@ def order_post():
 def order_add(data, user_id, order_number, order_status):
 	order = data["order"]
 	trip = order["trip"]
-	contact = order["contact"]
+	contact = data["contact"]
 	order_data = Order(user_id=user_id, order_number=order_number, order_price=order["price"], order_status=order_status, 
 						trip_id=trip["attraction"]["id"], trip_date=trip["date"], trip_time=trip["time"], 
 						contact_name=contact["name"], contact_email=contact["email"], contact_phone=contact["phone"])
