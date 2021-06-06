@@ -105,13 +105,28 @@ hr {
 
 .check-text {
     margin-bottom: 15px;
+    display: flex;
+}
+
+.check-text >label {
+    padding: 10px 0;
 }
 
 .check-text >input {
     border-radius: 5px;
     border: 1px solid #E8E8E8;
     height: 38px;
+    margin: 5px 0;
     min-width: 200px;
+    padding: 10px;
+}
+
+.tpfield {
+    height: 38px;
+    width: 200px;
+    border-radius: 5px;
+    border: 1px solid #E8E8E8;
+    margin: 5px 0;
     padding: 10px;
 }
 
