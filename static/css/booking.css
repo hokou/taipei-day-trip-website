@@ -1,213 +1,275 @@
-/* ==== */
-
-section {
-    color: #666666;
+.order_page > div:not(:last-of-type) {
+  border-bottom: 1px solid #e8e8e8;
 }
-
-.booking-head {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 40px 0;
-    border-bottom: 1px solid #E8E8E8;
+.schedule {
+  width: 60%;
+  margin: auto;
+  box-sizing: border-box;
 }
-
-.booking-title {
-    max-width: 1000px;
-    margin: 0 auto;
-    margin-bottom: 30px;
-    font-size: 19px;
-    font-weight: bolder;
+.schedule > p {
+  padding: 20px 0;
+  box-sizing: border-box;
 }
-
-.booking-data {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 0 10px;
-    display: flex;
-    flex-direction: column;
+.checkout {
+  display: flex;
+  width: 100%;
+  position: relative;
+  height: fit-content;
+  margin-bottom: 20px;
 }
-
-.booking-no {
-    width: 100%;
+/* .photo,
+.word_to_paid {
+  height: 200px;
+} */
+.checkout > .delete {
+  position: absolute;
+  left: 100%;
+  transform: translateX(-100%);
+  cursor: pointer;
+  z-index: 2;
 }
-
-.booking-yes {
-    width: 100%;
-    display: flex;
-    position: relative;
+.photo {
+  width: 266px;
+  margin-right: 22px;
+  height: 100%;
 }
-
-.booking-image {
-    width: 250px;
-    height: 200px;
-    background-image: url();
-    background-repeat: space;
-    background-size: contain;
-    background-position:center;
+.photo img {
+  width: 100%;
 }
-
-.booking-message {
-    padding-left: 30px;
+.word_to_paid p{
+  font-weight: 700;
+  margin-bottom: 10px;
 }
-
-.booking-message >div {
-    padding-bottom: 10px;
+.title_word_to_paid {
+  color: #448899;
 }
-
-div .message-title {
-    font-weight: bolder;
-    color: #448899;
-    padding-bottom: 20px;
+.information {
+  color: #666666;
+  font-weight: 700;
 }
-
-.message-bold {
-    font-weight: bolder;
+.form_div {
+  width: 60%;
+  margin: auto;
+  padding: 20px 0;
+  box-sizing: border-box;
 }
-
-.delect {
-    position: absolute;
-    top: 0;
-    right: 0;
-    cursor: pointer;
+.form_style {
+  display: flex;
+  flex-direction: column;
 }
-
-.bookinghide {
-    display: none;
+.form_style p {
+  color: #666666;
+  font-weight: 700;
 }
-
-hr {
-    max-width: 1200px;
-    margin: 0 auto;
-    border-top:1px solid #E8E8E8;
-    border-left:none;
-    border-right:none;
-    border-bottom:none;
+.form_style input {
+  padding: 5px;
 }
-
-/* ==== */
-
-.booking-check {
-    max-width: 1200px;
-    margin: 0 auto;
+.form_style p,
+.form_style div {
+  margin: 10px 0;
 }
-
-.contact-details, .credit-card {
-    max-width: 1000px;
-    padding: 40px 10px;
-    margin: auto;
+.ready_to_paid{
+  justify-content: flex-end;
 }
-
-.check-title {
-    font-size: 19px;
-    font-weight: bolder;
-    margin-bottom: 20px;
+.summary p,
+.summary button {
+  margin: 25px 0;
 }
-
-.check-text {
-    margin-bottom: 15px;
-    display: flex;
+.summary p {
+  text-align: right;
 }
-
-.check-text >label {
-    padding: 10px 0;
+.ready_to_paid .clear {
+  clear: both;
 }
-
-.check-text >input {
-    border-radius: 5px;
-    border: 1px solid #E8E8E8;
-    height: 38px;
-    margin: 5px 0;
-    min-width: 200px;
-    padding: 10px;
+.word_to_paid {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
-
+.card {
+  width: calc(162px / 4);
+}
+.time {
+  width: calc(162px / 2);
+}
+#total_sum {
+  font-weight: 900;
+}
+.credit_card_panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 340px;
+}
+.credit_card_panel p:first-child {
+  color: #666666;
+  font-weight: 700;
+}
+/* .credit_card_panel button{
+    width: auto;
+    height: auto;
+  } */
 .tpfield {
-    height: 38px;
-    width: 200px;
-    border-radius: 5px;
-    border: 1px solid #E8E8E8;
-    margin: 5px 0;
-    padding: 10px;
+  width: 200px;
+  height: 25px;
+  border: 1px solid gray;
+  margin: 5px 0;
+  padding: 5px;
 }
-
-.booking-final {
-    max-width: 1000px;
-    margin: 40px auto;
-    padding: auto 10px;
+.order_credit_card {
+  display: flex;
+  margin: 10px 0;
+  align-items: center;
+}
+#status_code{
+  color: red;
+  font-weight: 900;
+}
+#howareyou{
+  font-weight: 900;
+}
+.form_div {
+  display: none;
+}
+.form_div.open {
+  display: flex;
+}
+#messgae_for_null{
+  font-size: large;
+  font-weight: 800;
+  display: none;
+  color: orangered;
+}
+#messgae_for_null.open{
+  display: block;
+}
+#session_name{
+  color: blueviolet;
+  font-size: larger;
+}
+.error{
+  display: none;
+}
+#error_order_phone.open{
+  display: block;
+}
+.move_area{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  cursor: move;
+}
+.move_area:hover{
+  background-color: rgba(10,10,10,.3);
+}
+.checkout.line::before{
+  position: absolute;
+  content: "";
+  top: 0;
+  width: 200%;
+  transform: translateX(-25%);
+  border: 1px solid #333;
+}
+.checkout.bottom::before{
+  position: absolute;
+  content: "";
+  bottom: 0;
+  width: 200%;
+  transform: translateX(-25%);
+  border: 1px solid #333;
+}
+.back_to_page{
+  position: absolute;
+  top: 0;
+  right: 30px;
+  z-index: 10;
+  cursor: pointer;
+  font-size: 20px;
+  margin-right: 10px;
+  color: #448899;
+}
+.back_to_page:hover::after{
+  content: "回到該景點頁面重新編輯";
+  position: absolute;
+  top: -50px;
+  left: -20px;
+  background-color: #ccc;
+  padding: 10px;
+  width: 200px;
+  color: black;
+  text-align: center;
+  font-size: 16px;
+}
+.cover_page{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,.7);
+  z-index: 100;
+  top: 0;
+  justify-content: center;
+  align-items: center;
+  display: none;
+}
+.cover_page.show{
+  display: flex;
+}
+.cover_page > img{
+  width: 70px;
+}
+.cover_page > p{
+  color: white;
+  margin-left: 10px;
+}
+@media screen and (max-width: 800px) {
+  .form_div,
+  .schedule {
+    width: 90%;
     display: flex;
     flex-direction: column;
-    align-items:flex-end;
-}
-
-.cost-text {
-    padding-bottom: 25px;
-    font-weight: bolder;
-}
-
-.bookingbtn {
-    width: 175px;
-    border-radius: 5px;
-    border: 1px solid #448899;
-    background-color: #448899;
-    color: #ffffff;
-    padding: 10px 20px;
-    font-size: 19px;
-    line-height: 16px;
-}
-
-/* ==== */
-
-@media (max-width:1200px) {
-
-    .booking-head {
-        max-width: 1000px;
-        /* width: 100%; */
-        padding: 40px 10px;
-        margin: auto;
-    }
-
-    .booking-title, .booking-data {
-        max-width: 100%;
-        padding: 0;
-    }
-
-    .booking-check {
-        max-width: 100%;
-        padding: 0 10px;
-    }
-
-}
-
-
-@media (max-width:600px) {
-
-    .booking-yes {
-        width: 100%;
-        margin: 0 auto;
-        flex-wrap:wrap;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    .booking-image {
-        margin: 30px auto;
-        width: 100%;
-        max-width: 340px;
-        min-height: 200px;
-        background-repeat: space;
-        background-size: 100% auto;
-    }
-
-    .booking-message {
-        width: 100%;
-        padding-left: 0;
-        padding: auto;
-    }
-
-    .delect {
-        top: auto;
-        bottom: 0;
-        right: 0;
-    }
-
+    margin: auto;
+    align-items: center;
+  }
+  .checkout {
+    width: 340px;
+    flex-direction: column;
+  }
+  .word_to_paid {
+    width: 100%;
+    justify-content: space-evenly;
+  }
+  .photo {
+    width: 100%;
+    height: auto;
+    margin: auto;
+  }
+  .summary form {
+    text-align: right;
+  }
+  .form_style {
+    width: 340px;
+  }
+  .checkout .delete {
+    top: 100%;
+    transform: translate(-100%, -100%);
+  }
+  .form_div {
+    display: none;
+  }
+  .form_div.open {
+    display: flex;
+  }
+  .summary p{
+    text-align: center;
+  }
+  .back_to_page{
+    top: 99%;
+    right: 3%;
+    transform: translate(-100%, -100%);
+  }
+  .back_to_page:hover::after{
+    width: 100px;
+    top:-90px;
+  }
 }

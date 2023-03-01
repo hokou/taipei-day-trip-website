@@ -1,0 +1,59 @@
+{% extends "model.html" %} {% block style%}
+<link rel="stylesheet" href="../static/css/schedule.css" />
+{% endblock %} {% block content %}
+<div id="schedule_table">
+  <div class="fix-select">
+    <select id="select_month">
+      <!-- <option value="8">8月</option> -->
+    </select>
+    <span class="custom-arrow"></span>
+    <div class="float-item"></div>
+  </div>
+  <div id="member">
+    <div id="member_block"></div>
+    <div class="introduction">
+      <div><span class="red">O</span><span>有訂單</span></div>
+      <div><span>O</span><span>無訂單</span></div>
+    </div>
+  </div>
+  <div id="big_table">
+    <div id="schedule"></div>
+        <!-- <select name="" id="select_leader"></select> -->
+    <div id="order_today">
+      <p id="order_today_title">排班總覽</p>
+      <table class="already_timeline"></table>
+      <table class="already_timeline_for_month"></table>
+    </div>
+  </div>
+  <div>
+    <button id="send_schedule">send</button>
+  </div>
+</div>
+<div class="blk_schedule_select">
+  <div id="order_number_big">
+    訂單編號：<div class="order_number"></div><i class="far fa-copy" id="copy_icon"></i>
+  </div>
+  <div class="more_detail">
+    <div class="contact_person">
+      <div><span>聯絡人姓名：</span><span id="contact_name"></span></div>
+      <div><span>聯絡人email：</span><span id="contact_email"></span></div>
+      <div><span>聯絡人phone：</span><span id="contact_phone"></span></div>
+    </div>
+    <div class="trip_detail"></div>
+  </div>
+</div>
+<div id="schedule_append_panel">
+  <div id="shrink_window">
+    <i class="far fa-minus-square"></i>
+  </div>
+  <div id="schedule_now_select">
+    目前尚未增添班表
+  </div>
+</div>
+<div id="cover_page">
+  <img src="../static/746w-unscreen.gif" alt="">
+  <p>上傳中...</p>
+</div>
+{% endblock %} {% block script %}
+<script src="../static/js/schedule.js"></script>
+{% endblock %}

@@ -1,40 +1,89 @@
-{% extends "base.html" %}
-
-{% block css %}
-    <link rel="stylesheet" type="text/css" href="/css/index.css">
-{% endblock %}
-
-{% block title %}台北一日遊{% endblock %}
-
-{% block main %}
-    <nav>
-        <div class="memo">
-            <div class="memo1">輕鬆享受台北一日悠閒</div>
-            <div class="memo2"><p>探索每個角落，體驗城市的深度旅遊行程</p></div>
-            <form action="" class="search" id="search" method="GET" onsubmit="search();return false">
-                <input type="text" class="search-input" placeholder="輸入景點名稱查詢" id="searchkeyword" onclick="this.value=''";>
-                <button class="search-btn" id="searchbtn" type="button" onclick="search();"><img src="/img/search.png" alt="搜尋"></button>
-            </form>
+{% extends "model.html" %} {% block style %}
+<link rel="stylesheet" href="../static/css/index.css" />
+{% endblock %} {% block content %}
+<div class="banner">
+  <div class="word word1"><p>輕鬆享受台北一日悠閒</p></div>
+  <div class="word word2"><p>探索每個角落，體驗城市的深度旅遊行程</p></div>
+  <div class="word">
+    <div class="input_text">
+      <input type="text" placeholder="輸入景點名稱查詢" id="search_input" /><a
+        id="search"
+        ><img src="/static/icon_search.png" alt=""
+      /></a>
+      <div id="suggestion_word"></div>
+    </div>
+  </div>
+  <img src="/static/welcome 1.png" alt="" id="welcome" />
+</div>
+<div class="main">
+  <div id="recent_view">
+    <p>最近您瀏覽的景點</p>
+    <div id="recent_record"></div>
+  </div>
+  <p class="font_top">今日熱門瀏覽景點Top5</p>
+  <div class="top_attraction">
+    <div class="left_arrow arrow">
+      <i class="fas fa-angle-left"></i>
+    </div>
+    <div class="top_attr_item">
+      
+    </div>
+    <div class="right_arrow arrow">
+      <i class="fas fa-angle-right"></i>
+    </div>
+    <!-- <i class="fas fa-chevron-circle-right" id="right_page"></i> -->
+  </div>
+  <div class="div_for_mrt">
+    <p class="font_top" id="all_stop">所有景點</p>
+    <div id="more_detail_search">進階篩選</div>
+    <div id="more_detail_search_below">
+      <ul class="more_search">
+        <li id="select_mrt" class="click">篩選捷運站</li>
+        <li id="select_cat">篩選景點類別</li>
+      </ul>
+      <div class="select_category">
+        <div class="mrt_item">
+          <div id="mrt_red" class="mrt_element"></div>
+          <div id="mrt_green" class="mrt_element"></div>
+          <div id="mrt_blue" class="mrt_element"></div>
+          <div id="mrt_yellow" class="mrt_element"></div>
+          <div id="mrt_brown" class="mrt_element"></div>
         </div>
-    </nav>
-    <section class="attraction-row">
-        <!-- <article class="attraction-box">
-            <div class="attraction-img">
-                <a href="/attraction/1">
-                    <img src="http://www.travel.taipei/d_upload_ttn/sceneadmin/pic/11000848.jpg" alt="">
-                </a>
-            </div>
-            <div class="attraction-text">
-                <div class="attraction-title">新北投溫泉區</div>
-                <div class="attraction-data">
-                    <div class="attraction-mrt">新北投</div>
-                    <div class="attraction-cat">養生溫泉</div>
-                </div>
-            </div>
-        </article> -->
-    </section>
+        <div class="cat_item"></div>
+      </div>
+      <div id="action_mode">
+        <div id='clear_all_select'>清除全部</div>
+        <div id='send_to_select'>送出篩選</div>
+      </div>
+    </div>
+    <!-- <div class="select_category">
+      <label for="mrt_select">篩選捷運站</label>
+      <select name="" id="mrt_select"></select>
+      <span class="custom_arrow_index"></span>
+    </div>
+    <div class="select_category">
+      <label for="cat_select">篩選景點類別</label>
+      <select name="" id="cat_select"></select>
+      <span class="custom_arrow_index"></span>
+    </div> -->
+  </div>
+  <div class="container">
+    <!-- <div class="attraction">
+        <img src="http://picsum.photos/300/300?random=10" />
+        <div class="description">
+          <p>平安鐘</p>
+          <a class="transport">忠孝復興</a>
+          <a class="cat">公共藝術</a>
+        </div>
+      </div> -->
+  </div>
+  <div class="loading">
+    <img src="../static/VZvw.gif" alt="">
+  </div>
+</div>
 {% endblock %}
-
+<!-- <div class="copyright">Copyright &copy; 2021 台北一日遊</div> -->
+<!-- </body> -->
 {% block script %}
-    <script src="/js/index.js"></script>
+<script src="../static/js/index.js"></script>
 {% endblock %}

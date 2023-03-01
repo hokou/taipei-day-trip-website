@@ -1,0 +1,421 @@
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-decoration: none;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  font-family: 'Noto Sans TC', sans-serif;
+}
+/* p,label{
+  font-family: 'Ubuntu', sans-serif;
+} */
+a {
+  cursor: pointer;
+}
+::placeholder {
+  font-weight: 700;
+  color: #757575;
+}
+:root {
+  --wid: 310px;
+}
+::-webkit-scrollbar {
+  width: 5px;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: coral;
+}
+nav {
+  /* height: 54px; */
+  width: 100%;
+  position: fixed;
+  z-index: 99;
+  background-color: #fff;
+}
+nav ~ div {
+  top: 65px;
+  position: relative;
+}
+nav ul {
+  display: flex;
+  align-items: center;
+  width: 1200px;
+  margin: auto;
+  justify-content: space-between;
+}
+#login {
+  display: none;
+  font-weight: 700;
+}
+#logout {
+  display: none;
+  font-weight: 700;
+}
+#member_center,#leader_schedule,#question_center{
+  margin-left: 10px;
+  display: none;
+}
+#booking {
+  margin-left: 10px;
+  display: none;
+}
+#member_center,#leader_schedule{
+  margin-left: 10px;
+}
+.title {
+  color: #448899;
+  font-size: 30px;
+  padding: 10px 0px;
+  font-weight: bold;
+}
+.title:hover{
+  color: tomato;
+}
+.last-item a {
+  color: #666666;
+  font-weight: 700;
+  position: relative;
+}
+.last-item > a:last-of-type {
+  margin-left: 45px;
+}
+.last-item > a::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 5px;
+  background-color: #ff7700;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: width 0.8s;
+  /* display: none; */
+}
+.last-item a:hover::after {
+  width: 120%;
+}
+.last-item a:hover {
+  color: #ff7700;
+}
+.block_page {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  position: fixed;
+  display: none;
+  z-index: 100;
+}
+.block_page.open {
+  display: block;
+}
+.message {
+  background-color: #fff;
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  width: 340px;
+  align-items: center;
+  /* justify-content: space-between; */
+  padding: 0 10px 10px 10px;
+  box-sizing: border-box;
+  border-radius: 0 0 5px 5px;
+}
+.message input {
+  width: var(--wid);
+  height: 47px;
+  border: 1px solid #cccccc;
+  padding: 15px;
+  box-sizing: border-box;
+  margin: 5px 0;
+}
+.message .close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+}
+.message.not_you {
+  display: none;
+}
+.message p {
+  padding: 10px 0;
+}
+button {
+  background-color: #448899;
+  font-size: 19px;
+  color: #fff;
+  font-weight: 400;
+  line-height: 19px;
+  width: var(--wid);
+  border: none;
+  height: 47px;
+  padding: 10px;
+  cursor: pointer;
+}
+.message p {
+  width: var(--wid);
+  text-align: center;
+  color: #666666;
+  font-weight: 700;
+  text-align: center;
+}
+.message p:first-of-type {
+  font-size: 24px;
+}
+.copyright {
+  text-align: center;
+  padding: 45px 0;
+  background-color: #757575;
+  color: #fff;
+  flex-grow: 1;
+}
+.message input[type="text"],
+.message button,
+.message input[type="password"] {
+  border-radius: 10px;
+}
+.upper_bar {
+  background: linear-gradient(270deg, #337788 0%, #66aabb 100%);
+  width: 100%;
+  height: 10px;
+  position: absolute;
+  top: -10px;
+  border-radius: 5px 5px 0 0;
+}
+#message_for_error_create,
+#message_for_error_login {
+  color: red;
+}
+.abcRioButton {
+  margin-top: 10px;
+}
+/* .abcRioButton span {
+  font-weight: 900;
+} */
+#FB_BTN {
+  background-color: #1877f2;
+  color: white;
+  font-weight: 700;
+  width: 200px;
+  height: 30px;
+  border: none;
+  border-radius: 10px;
+  padding: 0;
+  font-size: 16px;
+}
+#profile {
+  /* position: absolute; */
+  width: 40px;
+  /* left: -45px;
+  top: -13px; */
+  border-radius: 10px;
+  height: 40px;
+  vertical-align:middle;
+}
+.error {
+  display: none;
+}
+.error.open {
+  display: block;
+  color: red;
+}
+#up_page {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  font-size: 50px;
+  cursor: pointer;
+  z-index: 100;
+  color: black;
+}
+.red{
+  color: #ED6A5E;
+}
+.yellow{
+  color: #FBBC05;
+}
+.blue{
+  color: #4285F4;
+}
+.green{
+  color: #34A853;
+}
+.buttonText {
+  /* background:radial-gradient(#fff 40%,#aaa 100%); */
+  color: #000000;
+  background-color: white;
+  font-weight: 700;
+  width: 200px;
+  height: 30px;
+  border-radius: 10px;
+  padding: 0;
+  font-size: 16px;
+  line-height: 19px;
+  cursor: pointer;
+  border:4px solid #FBBC05;
+  box-sizing: border-box;
+}
+.hamburger{
+  position: absolute;
+  right: 20px;
+  font-size: 30px;
+  cursor: pointer;
+  display:none; 
+}
+#blk_leader_check{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#blk_leader_check > input{
+  width: 20px;
+  margin-left: 20px;
+}
+.inform_board{
+  position: relative;
+  display: inline-block;
+  margin-right: 10px;
+}
+.bell_board a{
+  text-decoration: none;
+  margin-left: 0;
+}
+#inform_bell{
+  font-size: 20px;
+  cursor: pointer;
+  position: relative;
+}
+.bell_board{
+  position: absolute;
+  width: fit-content;
+  background-color: #cccccc;
+  top: 200%;
+  left: -40px;
+  border-radius: 5px;
+  padding: 10px;
+  display: none;
+  white-space: nowrap;
+}
+.bell_board.show{
+  display: block;
+}
+.bell_board > div{
+  word-break: keep-all;
+  white-space: nowrap;
+  margin-bottom: 10px;
+}
+#inform_bell.light::after{
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: red;
+  top: -5px;
+  left: -5px;
+}
+
+#login_create{
+  -webkit-perspective: 1000;
+  -moz-perspective: 1000;
+  perspective: 1000;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  transition: all 0.6s ease;
+  position: relative;
+  margin-top: 50px;
+}
+.message{
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  top: 50%;
+  left: 50%;
+}
+#create_board{
+  -webkit-transform: rotateY(180deg);
+  -moz-transform: rotateY(180deg);
+  transform: translateX(-50%) rotateY(180deg);
+}
+#login_create.rotate{
+  -webkit-transform: rotateY(180deg);
+  -moz-transform: rotateY(180deg);
+  transform: rotateY(180deg);
+}
+#create_account,#login_account{
+  background-color: #27272A;
+  padding: 10px;
+  border-radius: 10px;
+  margin-left: 5px;
+  color: white;
+}
+#create_account:hover,#login_account:hover{
+  background-color: black;
+  color: orange;
+}
+#already_create_account{
+  transform: translateY(-50%);
+}
+@media screen and (max-width: 1200px) {
+  nav ul {
+    width: 90%;
+  }
+}
+@media screen and (max-width: 600px) {
+  .hamburger{
+    display: block;
+  }
+  .last-item{
+    position: absolute;
+    display: none;
+    flex-direction: column;
+    right: 20px;
+    top: 100%;
+    background-color:rgba(0, 0, 0, .6);
+    border-radius: 5px;
+    padding: 20px 25px 20px 20px;
+  }
+  .last-item.open{
+    display: flex;
+  }
+  #booking{
+    margin-left: 10px;
+  }
+  #leader_schedule,#question_center{
+    margin-left: 10px;
+  }
+  .last-item > a{
+    margin-bottom: 50px;
+    color: #fff;
+  }
+  #logout{
+    /* margin-left: 40px; */
+  }
+  .inform_board{
+    margin-right: 0;
+  }
+  #inform_bell{
+    margin-bottom: 50px;
+    margin-left: 30px;
+  }
+  .bell_board{
+    top: 0;
+    left: -300%;
+  }
+  .bell_board > div{
+    white-space:normal;
+  }
+  #login{
+    margin-left: 10px;
+  }
+}
