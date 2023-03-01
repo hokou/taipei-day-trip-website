@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="/css/booking.css">
+    <script src="https://js.tappaysdk.com/tpdirect/v5.7.0"></script>
+{% endblock %}
+
+{% block title %}台北一日遊-預訂行程{% endblock %}
+
+{% block main %}
+    <section class="booking-head">
+        <div class="booking-title">您好，<span id="username"></span>，待預訂的行程如下：</div>
+        <div class="booking-data">
+            <div class="booking-no">目前沒有任何待預訂的行程</div>
+            <div class="booking-yes bookinghide">
+                <div class="booking-image"></div>
+                <div class="booking-message">
+                    <div class="message-title">台北一日遊：<span id="message-name"></span></div>
+                    <div><span class="message-bold">日期：</span><span id="message-date"></span></div>
+                    <div><span class="message-bold">時間：</span><span id="message-time"></span></div>
+                    <div><span class="message-bold">費用：</span><span id="message-cost"></span></div>
+                    <div><span class="message-bold">地點：</span><span id="message-address"></span></div>
+                </div>
+                <img class="delect" id="booking-delect" src="{{url_for('static', filename='img/delete.png')}}" alt="">
+            </div>
+        </div>
+    </section>
+    <section class="booking-check bookinghide">
+        <form action="/api/orders" id="booking-form" class="booking-form">
+            <div class="contact-details">
+                <div class="check-title">您的聯絡資訊</div>
+                <div class="check-text">
+                    <label for="booking_name">聯絡姓名：</label>
+                    <input type="text" id="booking_name" placeholder="您的姓名" name="name" class="" required/>
+                </div>
+                <div class="check-text">
+                    <label for="booking_email">電子信箱：</label>
+                    <input type="email" id="booking_email" placeholder="您的電子信箱" name="email" class="" required/>
+                </div>
+                <div class="check-text">
+                    <label for="booking_phone">手機號碼：</label>
+                    <input type="tel" id="booking_phone" placeholder="您的手機號碼" name="phone" class="" required/>
+                </div>
+                <div class="message-bold">請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</div>
+            </div>
+            <hr>
+            <div class="credit-card">
+                <div class="check-title">信用卡付款資訊</div>
+                <div class="check-text">
+                    <label for="card-number">卡片號碼：</label>
+                    <div class="tpfield" id="card-number"></div>
+                    <!-- <input type="text" placeholder="**** **** **** ****" class="" id="card-number" required/> -->
+                </div>
+                <div class="check-text">
+                    <label for="card-date">過期時間：</label>
+                    <div class="tpfield" id="card-expiration-date"></div>
+                    <!-- <input type="text" placeholder="MM/YY" class="" id="card-date" required/> -->
+                </div>
+                <div class="check-text">
+                    <label for="card-ccv">驗證密碼：</label>
+                    <div class="tpfield" id="card-ccv"></div>
+                    <!-- <input type="text" placeholder="CVV" class="" id="card-ccv" required/> -->
+                </div>
+                <div class="check-message" id="check-message"></div>
+            </div>
+            <hr>
+            <div class="booking-final">
+                <div class="cost-text">總價：新台幣 <span id="booking-cost"></span> 元</div>
+                <button class="bookingbtn" id="bookingbtn">確認訂購並付款</button>
+            </div>
+        </form>
+    </section>
+{% endblock %}
+
+{% block script %}
+    <script src="/js/booking.js"></script>
+    <script src="/js/order.js"></script>
+{% endblock %}

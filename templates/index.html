@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+{% endblock %}
+
+{% block title %}台北一日遊{% endblock %}
+
+{% block main %}
+    <nav>
+        <div class="memo">
+            <div class="memo1">輕鬆享受台北一日悠閒</div>
+            <div class="memo2"><p>探索每個角落，體驗城市的深度旅遊行程</p></div>
+            <form action="" class="search" id="search" method="GET" onsubmit="search();return false">
+                <input type="text" class="search-input" placeholder="輸入景點名稱查詢" id="searchkeyword" onclick="this.value=''";>
+                <button class="search-btn" id="searchbtn" type="button" onclick="search();"><img src="/img/search.png" alt="搜尋"></button>
+            </form>
+        </div>
+    </nav>
+    <section class="attraction-row">
+        <!-- <article class="attraction-box">
+            <div class="attraction-img">
+                <a href="/attraction/1">
+                    <img src="http://www.travel.taipei/d_upload_ttn/sceneadmin/pic/11000848.jpg" alt="">
+                </a>
+            </div>
+            <div class="attraction-text">
+                <div class="attraction-title">新北投溫泉區</div>
+                <div class="attraction-data">
+                    <div class="attraction-mrt">新北投</div>
+                    <div class="attraction-cat">養生溫泉</div>
+                </div>
+            </div>
+        </article> -->
+    </section>
+{% endblock %}
+
+{% block script %}
+    <script src="/js/index.js"></script>
+{% endblock %}
