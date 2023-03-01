@@ -1,78 +1,86 @@
-{% extends "base.html" %}
-
-{% block css %}
-    <link rel="stylesheet" type="text/css" href="/css/booking.css">
-    <script src="https://js.tappaysdk.com/tpdirect/v5.7.0"></script>
-{% endblock %}
-
-{% block title %}台北一日遊-預訂行程{% endblock %}
-
-{% block main %}
-    <section class="booking-head">
-        <div class="booking-title">您好，<span id="username"></span>，待預訂的行程如下：</div>
-        <div class="booking-data">
-            <div class="booking-no">目前沒有任何待預訂的行程</div>
-            <div class="booking-yes bookinghide">
-                <div class="booking-image"></div>
-                <div class="booking-message">
-                    <div class="message-title">台北一日遊：<span id="message-name"></span></div>
-                    <div><span class="message-bold">日期：</span><span id="message-date"></span></div>
-                    <div><span class="message-bold">時間：</span><span id="message-time"></span></div>
-                    <div><span class="message-bold">費用：</span><span id="message-cost"></span></div>
-                    <div><span class="message-bold">地點：</span><span id="message-address"></span></div>
-                </div>
-                <img class="delect" id="booking-delect" src="{{url_for('static', filename='img/delete.png')}}" alt="">
-            </div>
-        </div>
-    </section>
-    <section class="booking-check bookinghide">
-        <form action="/api/orders" id="booking-form" class="booking-form">
-            <div class="contact-details">
-                <div class="check-title">您的聯絡資訊</div>
-                <div class="check-text">
-                    <label for="booking_name">聯絡姓名：</label>
-                    <input type="text" id="booking_name" placeholder="您的姓名" name="name" class="" required/>
-                </div>
-                <div class="check-text">
-                    <label for="booking_email">電子信箱：</label>
-                    <input type="email" id="booking_email" placeholder="您的電子信箱" name="email" class="" required/>
-                </div>
-                <div class="check-text">
-                    <label for="booking_phone">手機號碼：</label>
-                    <input type="tel" id="booking_phone" placeholder="您的手機號碼" name="phone" class="" required/>
-                </div>
-                <div class="message-bold">請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</div>
-            </div>
-            <hr>
-            <div class="credit-card">
-                <div class="check-title">信用卡付款資訊</div>
-                <div class="check-text">
-                    <label for="card-number">卡片號碼：</label>
-                    <div class="tpfield" id="card-number"></div>
-                    <!-- <input type="text" placeholder="**** **** **** ****" class="" id="card-number" required/> -->
-                </div>
-                <div class="check-text">
-                    <label for="card-date">過期時間：</label>
-                    <div class="tpfield" id="card-expiration-date"></div>
-                    <!-- <input type="text" placeholder="MM/YY" class="" id="card-date" required/> -->
-                </div>
-                <div class="check-text">
-                    <label for="card-ccv">驗證密碼：</label>
-                    <div class="tpfield" id="card-ccv"></div>
-                    <!-- <input type="text" placeholder="CVV" class="" id="card-ccv" required/> -->
-                </div>
-                <div class="check-message" id="check-message"></div>
-            </div>
-            <hr>
-            <div class="booking-final">
-                <div class="cost-text">總價：新台幣 <span id="booking-cost"></span> 元</div>
-                <button class="bookingbtn" id="bookingbtn">確認訂購並付款</button>
-            </div>
-        </form>
-    </section>
-{% endblock %}
-
-{% block script %}
-    <script src="/js/booking.js"></script>
-    <script src="/js/order.js"></script>
+{% extends "model.html" %} {% block style%}
+<script src="https://js.tappaysdk.com/tpdirect/v5.5.0"></script>
+<link rel="stylesheet" href="../static/css/booking.css" />
+{% endblock %} {% block content %}
+<div class="cover_page">
+  <img src="../static/WMDx.gif" alt="">
+  <p>處理中...</p>
+</div>
+<div class="order_page">
+  <div class="schedule">
+    <p id="howareyou">您好，<span id="session_name">{{session.name}}</span>，你待確認的行程如下</p>
+    <p id="messgae_for_null">目前沒有任何待預訂的行程</p>
+    <!-- <div class="checkout">
+      <div class="photo"></div>
+      <div class="word_to_paid">
+        <p class="title_word_to_paid">台北一日遊1</p>
+        <p class="information">日期：</p>
+        <p class="information">時間：</p>
+        <p class="information">費用：</p>
+        <p class="information">地點：</p>
+      </div>
+      <img src="../static/icon_delete.png" alt="" class="delete">
+    </div> -->
+  </div>
+  <div class="contact form_div">
+    <form action="" class="form_style">
+      <p>你的連絡資訊</p>
+      <div>
+        <label for="">聯絡姓名：</label
+        ><input type="text" placeholder="ex:Yakoo" id="order_name" />
+      </div>
+      <div>
+        <label for="">聯絡信箱：</label
+        ><input
+          type="text"
+          placeholder="ex:imyeeee@gmail.com"
+          id="order_email"
+        />
+        <p id="error_order_email" class="error"></p>
+      </div>
+      <div>
+        <label for="">手機號碼：</label><input type="text" id="order_phone" />
+        <p id="error_order_phone" class="error"></p>
+      </div>
+      <p>
+        請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式
+      </p>
+    </form>
+  </div>
+  <div class="paid form_div">
+    <div class="credit_card_panel">
+      <p>信用卡付款資訊</p>
+      <div class="order_credit_card">
+        <label for="card-number">卡片號碼：</label>
+        <div class="tpfield" id="card-number"></div>
+      </div>
+      <div class="order_credit_card">
+        <label for="card-expiration-date">過期時間：</label>
+        <div class="tpfield" id="card-expiration-date"></div>
+      </div>
+      <div class="order_credit_card">
+        <label for="card-ccv">驗證密碼：</label>
+        <div class="tpfield" id="card-ccv"></div>
+      </div>
+      <!-- <button id="submit-button" onclick="onClick()">Get Prime</button>
+      <button id="xxx" onclick="search()">search</button> -->
+    </div>
+  </div>
+  <div class="ready_to_paid form_div">
+    <div class="summary">
+      <p id="total_sum">確認總價：新台幣2000元</p>
+      <button id="confirm_order_btn" onclick="onClick()">確認訂購並付款</button>
+      <p id="status_code"></p>
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
+{% endblock %} 
+{% block script %} 
+<script>
+  let booking_name = "{{session.name}}"
+  let booking_email = "{{session.email}}"
+</script>
+<script src="../static/js/booking.js"></script>
+<script src="../static/js/order_change.js"></script>
 {% endblock %}

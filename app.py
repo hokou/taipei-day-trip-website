@@ -1,65 +1,33 @@
-from flask import Flask, redirect, render_template, session, url_for, request, jsonify
-import os
-from dotenv import load_dotenv
-from flask_sqlalchemy import SQLAlchemy
-from webmodel import db, Attraction, User, Order
-import json
-import collections
-from datetime import datetime
-import requests
+from flask import *
+from main import app,db
 
+from controllers.attraction import attraction_app
+from controllers.user import user_app
+from controllers.booking import booking_app
+from controllers.order import order_app
+from controllers.message import message_app
+from controllers.weather import weather_app
+from controllers.news import news_app
+from controllers.collect import collect_app
+from controllers.leader import leader_app
+from controllers.upload_photo import upload_photo_app
+from controllers.search import search_app
+from controllers.recent_view import recent_view
+from controllers.near_by import near_by_app
 
-app = Flask(__name__,
-            static_folder="static",
-            static_url_path="/")
-app.config["JSON_AS_ASCII"]=False
-app.config["TEMPLATES_AUTO_RELOAD"]=True
-app.config['JSON_SORT_KEYS'] = False
-
-load_dotenv()
-
-host = os.getenv('host')
-username = os.getenv('username')
-password = os.getenv('password')
-database = os.getenv('database')
-secretkey = os.getenv('secretkey')
-PartnerKey = os.getenv('PartnerKey')
-MerchantID = os.getenv('MerchantID')
-
-# print(host,username,password,database)
-app.secret_key = secretkey.encode(encoding="utf-8")
-# print(app.secret_key)
-
-app.config['SQLALCHEMY_ECHO'] = True
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+pymysql://{username}:{password}@{host}:3306/{database}"
-
-db.init_app(app)
-
-# 景點數量
-total_attractions_num = 319
-# 一頁的數量
-onepage_num = 12
-
-# 錯誤訊息
-error_message = {
-	"1":"景點編號不正確",
-	"2":"伺服器內部錯誤，請稍後再試",
-	"3":"頁數錯誤",
-	"4":"查無資料",
-	"5":"帳號或密碼錯誤",
-    "6":"帳號已經被註冊",
-    "7":"輸入資料錯誤，請重新註冊",
-    "8":"輸入資料錯誤，請重新登入",
-	"9":"請先登出",
-	"10":"請先登入",
-	"11":"訂單更新失敗"
-}
-
-order_message = {
-	"0":"付款成功",
-	"1":"付款失敗",
-}
+app.register_blueprint(attraction_app)
+app.register_blueprint(user_app)
+app.register_blueprint(booking_app)
+app.register_blueprint(order_app)
+app.register_blueprint(message_app)
+app.register_blueprint(weather_app)
+app.register_blueprint(news_app)
+app.register_blueprint(collect_app)
+app.register_blueprint(leader_app)
+app.register_blueprint(upload_photo_app)
+app.register_blueprint(search_app)
+app.register_blueprint(recent_view)
+app.register_blueprint(near_by_app)
 
 # Pages
 @app.route("/")
@@ -70,11 +38,16 @@ def attraction(id):
 	return render_template("attraction.html")
 @app.route("/booking")
 def booking():
+	if "name" not in session:
+		return redirect(url_for("index"))
 	return render_template("booking.html")
 @app.route("/thankyou")
 def thankyou():
+	# if "name" not in session:
+	# 	return redirect(url_for("index"))
 	return render_template("thankyou.html")
 
+<<<<<<< HEAD
 
 # attraction
 @app.route("/api/attractions")
@@ -608,3 +581,8 @@ def order_JSON(query):
 
 if __name__ == "__main__":
 	app.run(host="0.0.0.0",port=3000)
+=======
+if __name__=="__main__":
+	app.run(host="0.0.0.0",port=3000,debug=True)
+# app.run(host="localhost",port=8000,ssl_context=('adhoc'),debug=True)
+>>>>>>> 399c4ccc70097b169e704112ebe95f2b0b8eb758

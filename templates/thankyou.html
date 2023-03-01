@@ -1,30 +1,300 @@
-{% extends "base.html" %}
+{% extends "model.html" %} {% block style %}
+<style>
+  #the_order_guy,
+  .bold {
+    font-weight: 900;
+    font-size: 20px;
+  }
+  #the_order_guy {
+    margin: auto;
+    color: #161b22;
+  }
+  .bold:nth-of-type(2n) {
+    margin-left: 10px;
+  }
+  #order_result {
+    padding: 10px;
+    text-align: center;
+    font-family: sans-serif;
+  }
+  #order_result p {
+    margin-bottom: 10px;
+  }
+  #status {
+    color: green;
+    font-weight: 900;
+  }
+  #remind {
+    color: red;
+    font-weight: 900;
+  }
+  .info {
+    display: flex;
+    align-items: flex-end;
+  }
+  .order_mention {
+    margin: auto;
+    width: fit-content;
+    position: relative;
+    border: 2px solid #b8ba31;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  .order_mention p {
+    color: black;
+  }
+  #order_id {
+    color: indianred;
+  }
+  #block_tick {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: url("../static/icon_tick.png");
+    background-size: 50%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    opacity: 0.2;
+    z-index: -1;
+  }
+  #copy {
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 700;
+    background-color: transparent;
+    color: #aaa;
+  }
+  /* #copy::after{
+    content: "";
+    height: 100%;
+    width: 1px;
+    background-color: #ddd;
+    position: absolute;
+    left: -5px;
+    top: 0;
+  } */
+  .info {
+    padding: 10px;
+  }
+  .table_thankyou {
+    width: 100%;
+  }
+  thead {
+    margin: auto;
+  }
+  th {
+    color: #38659b;
+  }
+  td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #333;
+    font-weight: 700;
+  }
+  .title_attr {
+    color: #1d2021;
+  }
+  .no_bottom {
+    border-bottom: none;
+  }
+  .name_for_order {
+    color: #91a111;
+  }
+</style>
+{% endblock %} {% block content %}
+<div id="order_result">
+  <div class="order_mention">
+    <div class="info">
+      <p id="the_order_guy">
+        <span class="name_for_order"></span>您好，您的訂單資訊如下：
+      </p>
+    </div>
+    <div class="order_panel_complete">
+      <table class="table_thankyou">
+        <thead>
+          <tr>
+            <th colspan="4" class="table_title"></th>
+          </tr>
+        </thead>
+        <tbody id="thankyou_info">
+          <tr>
+            <td>景點名稱</td>
+            <td>訂單價錢</td>
+            <td>出發日期</td>
+            <td>出發時間</td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- <div class="info">
+        <p class="bold">訂單編號 :</p>
+        <p id="order_id" class="bold"></p>
+        <input type="button" id="copy" value="copy" />
+      </div>
+      <div class="info">
+        <p class="bold">景點名稱 :</p>
+        <p id="attr_id" class="bold"></p>
+      </div>
+      <div class="info">
+        <p class="bold">參觀日期 :</p>
+        <p id="date_id" class="bold"></p>
+      </div>
+      <div class="info">
+        <p class="bold">參觀時間 :</p>
+        <p id="time_id" class="bold"></p>
+      </div>
+      <div class="info">
+        <p class="bold">付款狀態 :</p>
+        <p id="status" class="bold"></p>
+      </div> -->
+    </div>
+    <div id="block_tick"></div>
+  </div>
+  <br />
+  <p id="remind">請妥善保存你的訂單編號資訊，以利後續查詢</p>
+  <br />
+</div>
+{% endblock %} {% block script %}
+<script>
+  let href = window.location.href;
+  let order_numbr = href.split("=")[1];
+  let order_panel_complete = document.getElementsByClassName(
+    "order_panel_complete"
+  )[0];
 
-{% block css %}
-    <link rel="stylesheet" type="text/css" href="/css/thankyou.css">
-{% endblock %}
+  let table_title = document.getElementsByClassName("table_title")[0];
 
-{% block title %}台北一日遊-感謝{% endblock %}
+  let thankyou_info = document.getElementById("thankyou_info");
 
-{% block main %}
-    <section class="order">
-        <div class="order-title">您好，<span id="username"></span>，訂單的資訊如下：</div>
-        <div class="order-data">
-            <div class="order-no orderhide">
-                <div><span class="message-bold">訊息：</span><span id="message-error"></span></div>
-            </div>
-            <div class="order-yes orderhide">
-                <div><span class="message-bold">訂單號碼：</span><span id="message-number"></span></div>
-                <div><span class="message-bold">付款狀態：</span><span id="message-status"></span></div>
-                <div><span class="message-bold">費用：</span><span id="message-price"></span>元</div>
-                <div><span class="message-bold">地點：</span><span id="message-name"></span></div>
-                <div><span class="message-bold">日期：</span><span id="message-date"></span></div>
-                <div><span class="message-bold">時間：</span><span id="message-time"></span></div>
-            </div>
-        </div>
-    </section>
-{% endblock %}
+  let name_for_order = document.getElementsByClassName("name_for_order")[0]
 
-{% block script %}
-    <script src="/js/thankyou.js"></script>
+  function render_order_panel(d) {
+    // let orderid = document.createElement("p");
+    // orderid.classList.add("bold");
+    // orderid.innerHTML = "訂單標號：" + order_numbr;
+
+    name_for_order.innerHTML = d.contact_name
+
+    table_title.innerHTML = `<span id='order_id'>${order_numbr}</span> <i class="fas fa-copy" id='copy'></i>`;
+
+    d.trip.forEach((element) => {
+      let tr = document.createElement("tr");
+      let html_str = `
+        <td class='title_attr'>${element.attraction.name}</td>
+        <td>${element.price}</td>
+        <td>${element.date}</td>
+        <td>${element.time}</td>
+      `;
+      tr.innerHTML = html_str;
+      thankyou_info.appendChild(tr);
+    });
+
+    let tr = document.createElement("tr");
+    let html_str = `
+        <td class='no_bottom'></td>
+        <td class='no_bottom'>${d.summary}</td>
+        <td class='no_bottom'></td>
+        <td class='no_bottom'></td>
+      `;
+    tr.innerHTML = html_str;
+    thankyou_info.appendChild(tr);
+
+    add_copy()
+
+    // order_panel_complete.appendChild(orderid);
+
+    // d.trip.forEach((element) => {
+    //   let block_attr = set_div(element.attraction.name, "景點名稱");
+    //   order_panel_complete.appendChild(block_attr);
+    // });
+
+    // let sum_attr = set_div(d.summary, "付款總額");
+    // order_panel_complete.appendChild(sum_attr);
+  }
+
+  fetch(`/api/order/${order_numbr}`)
+    .then((res) => {
+      return res.json();
+    })
+    .then((data) => {
+      // if (!data["data"]) {
+      //   window.location.href = "/";
+      //   return;
+      // }
+      render_order_panel(data["data"]);
+    });
+
+  function set_div(name, tag) {
+    let info = document.createElement("div");
+    info.classList.add("info");
+
+    let attr_name = document.createElement("p");
+    attr_name.classList.add("bold");
+    attr_name.innerHTML = tag;
+
+    let attr_id = document.createElement("p");
+    attr_id.classList.add("bold");
+    attr_id.id = "attr_id";
+    attr_id.innerHTML = name;
+
+    info.appendChild(attr_name);
+    info.appendChild(attr_id);
+    return info;
+  }
+
+  // fetch(`/api/order/${order_numbr}`)
+  //   .then((res) => {
+  //     return res.json();
+  //   })
+  //   .then((data) => {
+  //     if (data["error"]) {
+  //       window.location.href = "/";
+  //       return;
+  //     }
+  //     console.log(data);
+  //     document.getElementById("order_id").innerHTML = order_numbr;
+  //     document.getElementById("attr_id").innerHTML =
+  //       data["data"]["trip"]["attraction"]["name"];
+  //     document.getElementById("date_id").innerHTML =
+  //       data["data"]["trip"]["date"];
+  //     document.getElementById("time_id").innerHTML =
+  //       data["data"]["trip"]["time"];
+  //     if (data.data["status"] === 0) {
+  //       document.getElementById("status").innerHTML = "付款成功!!!!";
+  //     } else {
+  //       document.getElementById("status").innerHTML = "付款失敗";
+  //     }
+  //   });
+  fetch("/api/booking", {
+    method: "DELETE",
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .then((data) => {
+    });
+
+  function add_copy() {
+    let copy = document.getElementById("copy");
+    copy.addEventListener("click", function () {
+      let order_id = document.getElementById("order_id");
+      let range = document.createRange();
+      range.selectNode(order_id);
+      let sel = window.getSelection()
+      sel.removeAllRanges()
+      sel.addRange(range)
+      try {
+        if (document.execCommand("Copy", "false", null)) {
+          alert("複製成功");
+        } else {
+          alert("複製失敗");
+        }
+      } catch {
+        alert("複製錯誤");
+      }
+    });
+  }
+</script>
 {% endblock %}

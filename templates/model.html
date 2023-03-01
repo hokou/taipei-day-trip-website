@@ -1,0 +1,124 @@
+<head>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1"
+  />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400&display=swap');
+  </style>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400&family=Ubuntu:wght@500&display=swap');
+  </style>
+  <link
+    href="https://fonts.googleapis.com/css?family=Roboto"
+    rel="stylesheet"
+    type="text/css"
+  />
+  <link rel="shortcut icon" href="../static/log.svg" />
+  <script src="https://apis.google.com/js/api:client.js"></script>
+  <script
+    src="https://kit.fontawesome.com/b3d0241009.js"
+    crossorigin="anonymous"
+  ></script>
+  <!-- <link
+    rel="shortcut icon"
+    type="image/x-icon"
+    href="../static/taipei-102.png"
+  /> -->
+  <title>台北一日遊</title>
+  <link rel="stylesheet" href="../static/css/model.css" />
+  {% block style %}{% endblock %}
+</head>
+<body>
+  <div class="block_page">
+    <div id="login_create">
+      <form class="message login" id="login_board">
+        <div class="upper_bar"></div>
+        <p>登入會員帳號</p>
+        <input type="text" placeholder="輸入電子信箱，可填測試帳號：tony@tony" id="login_email" />
+        <input type="password" placeholder="輸入密碼，可填測試密碼：tony" id="login_password" />
+        <button id="login_btn">登入帳戶</button>
+        <p>or</p>
+        <div id="gSignInWrapper">
+          <div id="customBtn" class="customGPlusSignIn">
+            <button class="buttonText">使用<span class="blue">G</span><span class="red">o</span><span class="yellow">o</span><span class="blue">g</span><span class="green">l</span><span class="red">e</span>登入</button>
+          </div>
+        </div>
+        <br>
+        <button id="FB_BTN">使用Facebook登入</button>
+        <!-- <div class="fb-login-button" data-width="" data-size="large" data-button-type="continue_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false" onlogin="checkLoginState();"></div> -->
+        <div id="fb-root"></div>
+        <p id="message_for_error_login"></p>
+        <p>還沒有帳戶?<a id="create_account">點此註冊</a></p>
+        <br>
+        <a href="/forget">忘記密碼?</a>
+        <br>
+        <img src="../static/icon_close.png" alt="" class="close" />
+      </form>
+      <form class="message create" id="create_board">
+        <div class="upper_bar"></div>
+        <p>註冊會員帳號</p>
+        <input type="text" placeholder="輸入姓名" id="create_name" />
+        <p id="error_name" class="error"></p>
+        <input type="text" placeholder="輸入電子信箱" id="create_email" />
+        <p id="error_email" class="error"></p>
+        <input type="password" placeholder="輸入密碼" id="create_password" />
+        <p id="error_password" class="error"></p>
+        <button id="create_account_btn">註冊新帳戶</button>
+        <p id="message_for_error_create"></p>
+        <div id="blk_leader_check">
+          <label for="check_leader">是否為導遊</label>
+          <input type="checkbox" id="check_leader">
+        </div>
+        <br>
+        <p id="already_create_account">已經有帳戶了?<a id="login_account">點此登入</a></p>
+        <img src="../static/icon_close.png" alt="" class="close" />
+      </form>
+    </div>
+  </div>
+  <nav>
+    <ul>
+      <a href="/" class="title">台北一日遊</a>
+      <i class="fas fa-bars hamburger"></i>
+      <li class="last-item">
+        <div class="inform_board">
+          <i class="far fa-bell" id="inform_bell"></i>
+          <div class="bell_board"></div>
+        </div>
+        <a id="login">註冊/登入</a>
+        <a id="logout">
+          <img src="" alt="" id="profile" />
+          登出</a
+        >
+        <a id="member_center" href="/member_center">會員中心</a>
+        <a id="booking">購物車</a>
+        <!-- <a id="question_center" href="http://54.199.151.196:3000/echo_test">客服中心</a> -->
+        <a id="leader_schedule">導遊排班</a>
+      </li>
+    </ul>
+  </nav>
+  {% block content %}{% endblock %}
+  <div class="copyright">Copyright &copy; 2021 台北一日遊</div>
+  <!-- <i class="fas fa-chevron-circle-up" id="up_page"></i> -->
+</body>
+<script>
+  let src = '{{session.get("url")}}';
+</script>
+<script src="../static/js/model.js"></script>
+<!-- <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script> -->
+<!-- <script async defer crossorigin="anonymous" src="https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v10.0&appId=361104395011889&autoLogAppEvents=1" nonce="4SMMZnj8"></script> -->
+<script
+  async
+  defer
+  crossorigin="anonymous"
+  src="https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v10.0&appId=361104395011889&autoLogAppEvents=1"
+  nonce="RkBQBAP8"
+></script>
+<script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+<df-messenger
+  intent="WELCOME"
+  chat-title="客服機器人"
+  agent-id="8c6255ab-7b31-4679-9fa7-35baa09fd5c3"
+  language-code="zh-tw"
+></df-messenger>
+{% block script %}{% endblock %}

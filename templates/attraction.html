@@ -1,69 +1,185 @@
-{% extends "base.html" %}
-
-{% block css %}
-    <link rel="stylesheet" type="text/css" href="/css/attraction.css">
-{% endblock %}
-
-{% block title %}台北一日遊-景點{% endblock %}
-
-{% block main %}
-    <section class="attraction-data">
-        <div class="attraction-img">
-            <div class="carousel-slide" id="carousel-slide">
-                <div class="images">
-                    <!-- <img class="hide" src="http://www.travel.taipei/d_upload_ttn/sceneadmin/pic/11000848.jpg" alt="">
-                    <img class="action" src="http://www.travel.taipei/d_upload_ttn/sceneadmin/pic/11000340.jpg" alt=""> -->
-                </div>
-                <div class="arrow">
-                    <img src="{{url_for('static', filename='img/left_arrow.png')}}" alt="" class="left" id="prevBtn">
-                    <img src="{{url_for('static', filename='img/right_arrow.png')}}" alt="" class="right" id="nextBtn">
-                </div>
-                <div class="po">
-                    <!-- <div class="p"></div>
-                    <div class="p"></div>
-                    <div class="p"></div> -->
-                </div>
-            </div>
+{% extends "model.html" %} {% block style%}
+<link rel="stylesheet" href="../static/css/attraction.css" />
+<link rel="stylesheet" href="../static/css/calendar.css">
+<link
+rel="stylesheet"
+href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+crossorigin=""
+/>
+<script
+src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+crossorigin=""
+></script>
+<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css">
+<link rel="stylesheet" href="../static/css/leaflet.awesome-markers.css">
+{% endblock %} {% block content %}
+<div class="show_cat_mrt">
+  <div id="show_data"></div>
+</div>
+<div class="place_view">
+  <div class="img_test">
+    <img src="../static/btn_rightArrow.png" alt="" class="button right" />
+    <img src="../static/btn_leftArrow.png" alt="" class="button left" />
+    <div class="point"></div>
+    <map name="control_pic">
+      <area shape="rect" coords="0,0,100,406" href="#" alt="" />
+      <area
+        shape="rect"
+        coords="440,0,540,406"
+        href="#"
+        alt=""
+        class="rect_close"
+      />
+    </map>
+    <map name="control_RWD">
+      <area shape="rect" coords="0,0,100,406" href="#" alt="" />
+      <area
+        shape="rect"
+        coords="240,0,340,350"
+        href="#"
+        alt=""
+        class="rect_open"
+      />
+    </map>
+  </div>
+  <div class="img_word">
+    <p id="attraction_name"></p>
+    <p id="attraction_cat_and_mrt"></p>
+    <div class="order_panel">
+      <form action="">
+        <p class="form_title">訂購導覽行程</p>
+        <p class="warning_form_title">日期反灰代表當天無導遊排班，點選日曆可開關日曆</p>
+        <!-- <p>以此景點為中心的一日行程，帶你探索城市角落故事</p> -->
+        <div id="select_date">
+          <p id="select_date_word" class="form_title">1、請先選擇日期   <i class="fas fa-calendar-alt" id="calendar_toggle"></i><span id="select_certain_date">尚未選擇日期</span></p>
+          <div id="big_table">
+            <div id="schedule_table"></div>
+          </div>
+          <!-- <label for="date" class="form_title">選擇日期：</label
+          ><input type="date" id="date" name="date" />
+          <p id="error_date"></p> -->
         </div>
-        <div class="attraction-profile">
-            <div class="name-text" id="name"></div>
-            <div class="category-text"><span id="category"></span> at <span id="mrt"></div>
-            <div class="booking">
-                <div class="booking-title">訂購導覽行程</div>
-                <div class="booking-text">以此景點為中心的一日行程，帶您探索城市角落故事</div>
-                <form action="/api/booking" id="booking-form" class="booking-form">
-                    <div class="booking-title date-selection">
-                        <label for="bookingDate"  class="booking-title">選擇日期：</label>
-                        <input type="date" name="date" id="bookingDate" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
-                    </div>
-                    <div class="booking-title time-selection" id="time">
-                        <span  class="booking-title">選擇時間：</span>
-                        <input class="booking-time" type="radio" id="AM" name="time" value="morning" checked>
-                        <label for="AM" class="booking-text label">上半天</label>
-                        <input class="booking-time" type="radio" id="PM" name="time" value="afternoon">
-                        <label for="PM" class="booking-text label">下半天</label>
-                    </div>
-                    <div  class="booking-title">導覽費用：新台幣 <span class="booking-text" id="price">2000</span> 元</div>
-                    <button class="booking-button" type="submit">開始預訂行程</button>
-                   <div class="booking_message" id="booking_message"></div>
-                </form>
-            </div>
+        <div id="select_time">
+          <label for="" class="form_title" id="select_time_word">2、再選擇時間：</label>
+          <label>
+            <input type="radio" id="up_time" name="time" checked />
+            <span>上半天</span>
+          </label>
+          <label>
+            <input type="radio" id="down_time" name="time" />
+            <span>下半天</span>
+          </label>
         </div>
-    </section>
-    <hr>
-    <div class="attraction-memo">
-        <article class="description" id="description"></article>
-        <article class="address">
-            <p class="memo-text">景點地址：</p>
-            <p class="" id="address"></p>
-        </article>
-        <article class="transportation">
-            <p class="memo-text">交通方式：</p>
-            <p class="" id="transport"></p>
-        </article>
+        <p class="form_title" id="price">導覽費用：新台幣2000元</p>
+        <div class="action_for_booking">
+          <button id="submit_booking">開始導覽行程</button>
+          <button id="collect_btn">加入收藏</button>
+        </div>
+        <p id="error_message_show"></p>
+      </form>
     </div>
-{% endblock %}
+  </div>
+</div>
+<div class="describe">
+  <div id="near_by">
+    <div id="scroll_bar">
+      <div id="line"></div>
+      <div id="circle"></div>
+    </div>
+    <div id="near_by_attr">
+      
+    </div>
+  </div>
+  <div id="mapid"></div>
+  <div id="weather_forcast_region">
+    <!-- <i class="fas fa-caret-square-left" id="left_icon"></i>
+    <i class="fas fa-caret-square-right close" id="right_icon"></i> -->
+    <div id="weather_tool"></div>
+  </div>
+  <div class="describe_content"></div>
+  <div class="info_to_flex">
+    <span class="des_title">景點地址</span>
+    <div class="address_place"></div>
+  </div>
+  <div class="info_to_flex">
+    <span class="des_title">交通方式</span>
+    <div class="traffic"></div>
+  </div>
+  <div class="info_to_flex">
+    <span class="des_title">近一周該區相關新聞</span>
+    <div class="news"></div>
+  </div>
+  <div class="video">
+    <span class="des_title">Youtube相關影片</span>
+    <br />
+    <iframe
+      id="yt_video"
+      width="560"
+      height="315"
+      title="YouTube video player"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+    ></iframe>
+  </div>
+  <div class="photo_wall">
+    <p class="des_title">照片牆</p>
+    <div class="the_wall_inside">
 
-{% block script %}
-    <script src="/js/attraction.js"></script>
+    </div>
+    <div class="the_wall">
+      <img src="" alt="" id="the_wall_photo">
+    </div>
+  </div>
+</div>
+<div class="message_block">
+  <p class="des_title">留言區<span id="message_count"></span></p>
+  <br />
+  <div class="score_big_board">
+    <span>評價：</span>
+    <ul class="score_board">
+      <li data-score="1"><span class="empty_star" data-id="0"><i class="far fa-star"></i></span><span class="full_star"><i class="fas fa-star"></i></span></li>
+      <li data-score="2"><span class="empty_star" data-id="1"><i class="far fa-star"></i></span><span class="full_star"><i class="fas fa-star"></i></span></li>
+      <li data-score="3"><span class="empty_star" data-id="2"><i class="far fa-star"></i></span><span class="full_star"><i class="fas fa-star"></i></span></li>
+      <li data-score="4"><span class="empty_star" data-id="3"><i class="far fa-star"></i></span><span class="full_star"><i class="fas fa-star"></i></span></li>
+      <li data-score="5"><span class="empty_star" data-id="4"><i class="far fa-star"></i></span><span class="full_star"><i class="fas fa-star"></i></span></li>
+    </ul>
+    <p id="score_real">0</p>
+    <label for="msg_photo_upload" id="msg_photo_upload_icon">
+      <i class="fas fa-images"></i>
+    </label>
+    <input type="file" name="" id="msg_photo_upload">
+  </div>
+  <div class="message_content">
+    <blockquote id="leave_msg_textarea" contenteditable="true"></blockquote>
+    <button id="btn_msg">送出</button>
+  </div>
+  <div id="photo_message"></div>
+  <br />
+  <div id="msg_history"></div>
+  <!-- <div class="msg_below">
+    <p id="msg_name">蔡承翰</p>
+    <p id="msg_time">2021-06-03</p>
+    <p id="msg_context">
+      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Explicabo culpa
+      recusandae nesciunt consectetur nemo iure dignissimos consequuntur ea,
+      vero possimus, officia ipsa ipsum minus quae modi aspernatur adipisci?
+      Amet, pariatur?
+    </p>
+  </div> -->
+  <button id="btn_more_msg">載入更多</button>
+</div>
+<!-- <div id="weather_forcast_region">
+  <i class="fas fa-caret-square-left" id="left_icon"></i>
+  <i class="fas fa-caret-square-right close" id="right_icon"></i>
+  <div id="weather_tool">
+    
+  </div>
+</div> -->
+{% endblock %} {% block script %}
+<script src="../static/js/leaflet.awesome-markers.js"></script>
+<script src="../static/js/calendar.js"></script>
+<script src="../static/js/attraction.js"></script>
 {% endblock %}
